@@ -1,5 +1,7 @@
 "ui";
 
+const { openUrl } = require("__app__");
+const readPersonalConfig = require("./src/readPersonalConfig");
 const checkPermission = require("./src/ui/checkPermission");
 const checkUpdate = require("./src/ui/checkUpdate");
 const toDrive = require("./src/ui/toDrive");
@@ -84,6 +86,22 @@ ui.layout(
                                             <checkbox id="是否循环任务" marginRight="6dp" text="循环任务" />
                                             <checkbox id="speed" marginRight="6dp" text="光速模式" />
                                         </horizontal>
+                                        <text textSize="15sp" text="延迟时间：" marginLeft="10dp" layout_verticalCenter='true' />
+                                        <horizontal>
+                                            <input inputType="number" textSize="15sp" marginLeft="2dp" layout_verticalCenter='true' id="delayTime" />
+                                            <text textSize="15sp" text="ms" marginLeft="10dp" layout_verticalCenter='true' />
+                                        </horizontal>
+                                        <checkbox id="是否开启自定义结算" marginRight="6dp" text="是否开启自定义结算" />
+                                        <horizontal>
+                                            <text textSize="15sp" text="配置地址：" marginLeft="10dp" layout_verticalCenter='true' />
+                                            <input text='/sdcard/Download/test.txt' textSize="15sp" marginLeft="2dp" layout_verticalCenter='true' id="personalConfig" />
+                                        </horizontal>
+                                        <button textSize="15sp" text="保存自定义" id="savePersonalConfig"></button>
+                                        <checkbox id="是否开启卡住推送" marginRight="6dp" text="是否开启卡住推送" />
+                                        <horizontal>
+                                            <text textSize="15sp" text="pushplus-token:" marginLeft="10dp" layout_verticalCenter='true' />
+                                            <input text='请输入token' textSize="15sp" marginLeft="2dp" layout_verticalCenter='true' id="pushplusToken" />
+                                        </horizontal>
                                     </vertical>
                                     <View bg="{{color}}" h="*" w="10" />
                                 </card>
@@ -152,10 +170,9 @@ ui.start.on('click', () => {
             toastLog("脚本启动中！请耐心等待")
         }, 500);
         setTimeout(function () {
-            if (runThread != null) {
-                runThread.getEngine().emit("value", !value);
-            }
+            if (runThread != null) runThread.getEngine().emit("value", !value);
         }, 3000);
+
     }
     setTimeout(() => {
         fabMenuState = !fabMenuState;
@@ -328,7 +345,19 @@ ui.list.on('item_bind', function (itemView, itemHolder) {
         }
     });
 });
-
+ui.savePersonalConfig.on('click', function () {
+    var personalConfigData = files.read(ui.personalConfig.text()).split('\r\n');
+    var coordinate = {};
+    var coordinateArray = [];
+    for (let index = 0; index < personalConfigData.length; index++) {
+        coordinate.x = personalConfigData[index].split('X')[0];
+        coordinate.y = personalConfigData[index].split('X')[0].split('Y')[0];
+        index++;
+        coordinateArray.push(coordinate);
+    }
+    storage.put("personalConfig", coordinateArray);
+    console.log(storage.get('personalConfig'));
+})
 var yyslist = [
     "御魂",
     "探索",
@@ -374,9 +403,11 @@ ui.fabMenu.on("click", () => {
 //功能实现
 function initUiValue() {
     //御魂
-    ui.队长模式.setChecked(storage.get("队长模式", true));
-    ui.是否循环任务.setChecked(storage.get('是否循环任务', true));
-    ui.speed.setChecked(storage.get('speed', true));
+    ui.队长模式.setChecked(storage.get("队长模式", false));
+    ui.是否循环任务.setChecked(storage.get('是否循环任务', false));
+    ui.是否开启自定义结算.setChecked(storage.get('是否开启自定义结算', false));
+    ui.是否开启卡住推送.setChecked(storage.get('是否开启卡住推送', false));
+    ui.speed.setChecked(storage.get('speed', false));
     changeFabMenuState(false);
 }
 
@@ -386,6 +417,9 @@ function saveUiValue() {
     storage.put("队长模式", ui.队长模式.checked);
     storage.put("是否循环任务", ui.是否循环任务.checked);
     storage.put("speed", ui.speed.checked);
+    storage.put("delayTime", ui.delayTime.text());
+    if (storage.get("是否开启卡住推送")) storage.put("pushplusToken", ui.pushplusToken.text());
+    storage.put("是否开启自定义结算", ui.是否开启自定义结算.checked);
 }
 function changeFabMenuState(state) {
     if (state) {

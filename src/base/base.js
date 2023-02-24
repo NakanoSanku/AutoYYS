@@ -19,10 +19,10 @@ function bezier(ScreenPoint, Offset) {
     }
 };
 /**
-* 高斯分布模型
-* @param { number } mean 数学期望
-* @param { number } std 偏移量
-*/
+ * 高斯分布模型
+ * @param { number } mean 数学期望
+ * @param { number } std 偏移量
+ */
 function normalRandom(mean, std) {
     let u = 0.0,
         v = 0.0,
@@ -37,17 +37,22 @@ function normalRandom(mean, std) {
     return mean + u * c * std;
 };
 /**
-* 基于高斯模型取坐标，并判断时候超出范围  生成在max范围内的随机整数数
-* @param { number } max 最大范围
-*/
+ * 基于高斯模型取坐标，并判断时候超出范围  生成在max范围内的随机整数数
+ * @param { number } max 最大范围
+ */
 function randomNumber(max) {
     const mean = random(0, max / 4);
     var x = normalRandom(mean, (max - mean) / 3);
     return Math.abs(x) > max ? x = randomNumber(max) : Math.abs(Math.round(x));
 };
+
 function centralPoint(param) {
-    return { x: param[0] + param[2] / 2, y: param[1] + param[3] / 2 }
+    return {
+        x: param[0] + param[2] / 2,
+        y: param[1] + param[3] / 2
+    }
 }
+
 function checkPoint(Point, param) {
     Point.x = Point.x >= [param[0] + param[2]] ? (param[0] + param[2] - 10) : Point.x;
     Point.x = Point.x <= param[0] ? param[0] + 10 : Point.x;
@@ -60,7 +65,7 @@ function checkPoint(Point, param) {
  * @param {[Xmin,Ymin,Xmax,Ymax]} param 
  * @returns 
  */
-base.formatRegion = function (params) {
+base.formatRegion = function(params) {
     if (params.length == 4) {
         return [params[0], params[1], params[2] - params[0], params[3] - params[1]]
     } else if (params.length == 2) {
@@ -69,6 +74,13 @@ base.formatRegion = function (params) {
         return params
     }
 }
+base.createPoint = function(params) {
+    let region = base.formatRegion(params); //转换成x，y，w，h的形式
+    Point = centralPoint(region); //获取范围中心点坐标
+    Point.x += Math.pow(-1, random(0, 99)) * randomNumber(region[2] / 2);
+    Point.y += Math.pow(-1, random(0, 99)) * randomNumber(region[3] / 2);
+    return checkPoint(Point, region);
+}
 /**
  * 曲线滑动
  * @param {*} qx
@@ -76,14 +88,25 @@ base.formatRegion = function (params) {
  * @param {*} zx
  * @param {*} zy
  * @param {*} time
-*/
-base.smlMove = function (qx, qy, zx, zy, time) {
+ */
+base.smlMove = function(qx, qy, zx, zy, time) {
     let slidingPath = [time];
-    let point = [
-        { x: qx, y: qy },
-        { x: random(qx - 100, qx + 100), y: random(qy, qy + 50) },
-        { x: random(zx - 100, zx + 100), y: random(zy, zy + 50) },
-        { x: zx, y: zy },
+    let point = [{
+            x: qx,
+            y: qy
+        },
+        {
+            x: random(qx - 100, qx + 100),
+            y: random(qy, qy + 50)
+        },
+        {
+            x: random(zx - 100, zx + 100),
+            y: random(zy, zy + 50)
+        },
+        {
+            x: zx,
+            y: zy
+        },
     ];
     for (let i = 0; i < 1; i += 0.08) {
         let newPoint = bezier(point, i);
@@ -103,17 +126,14 @@ base.smlMove = function (qx, qy, zx, zy, time) {
  * method = 2 时 点击操作     
  * 传入point为定点操作
  */
-base.randomClick = function (params) {
+base.randomClick = function(params) {
     let method = params.method || 1;
     //根据范围生成坐标
-    var Point = { x: 0, y: 0 };
-    if (params.region != undefined) {
-        let region = base.formatRegion(params.region);//转换成x，y，w，h的形式
-        Point = centralPoint(region);//获取范围中心点坐标
-        Point.x += Math.pow(-1, random(0, 99)) * randomNumber(region[2] / 2);
-        Point.y += Math.pow(-1, random(0, 99)) * randomNumber(region[3] / 2);
-        Point = checkPoint(Point, region);
-    }
+    var Point = {
+        x: 0,
+        y: 0
+    };
+    if (params.region != undefined) Point = base.createPoint(params.region);
     Point = params.point || Point;
     try {
         switch (method) {

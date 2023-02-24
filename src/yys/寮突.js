@@ -1,5 +1,6 @@
 const { smlMove, randomClick } = require("../base/base");
 const { findImg } = require("../base/search");
+const debug = require("../debug");
 const settlement = require("./settlement");
 const 协作检测 = require("./协作检测");
 
@@ -49,7 +50,9 @@ module.exports = function (params) {
     }
     let beat = { 'template': './assets/img/突破/已突破.bmp', 'threshold': 0.6 }
     var isBeat = false
+    let start = Date.now();
     while (true) {
+        debug({ start });
         if (findImg(record)) break;
         if (findImg(breakthrough)) {
             randomClick({ region: [250, 640, 300, 690] });
@@ -58,6 +61,7 @@ module.exports = function (params) {
         sleep(500);
     }
     while (true) {
+        debug({ start });
         协作检测();
         if (findImg(formula)) {
             sleep(500);
@@ -89,6 +93,7 @@ module.exports = function (params) {
         sleep(800);
     }
     while (true) {
+        debug({ start });
         协作检测();
         if (findImg(close)) {
             sleep(3000);

@@ -1,5 +1,6 @@
 const { randomClick } = require("../base/base")
 const { findImg } = require("../base/search")
+const debug = require("../debug")
 const settlement = require("./settlement")
 const 协作检测 = require("./协作检测")
 
@@ -21,6 +22,7 @@ let breakRegion = [[250, 150, 450, 250], [580, 150, 750, 250], [900, 150, 1100, 
 ]
 
 module.exports = function (params) {
+
     let numberOfFailures = 0;
     let numberOfVictory = 0;
     let index = 0;
@@ -49,12 +51,14 @@ module.exports = function (params) {
     let presonBreakthrough = { 'template': './assets/img/突破/个人突破/个人突破.bmp', 'region': [1179, 191, 1279, 353], 'isClick': true }
     let refresh = { 'template': './assets/img/突破/个人突破/刷新.bmp', 'region': [914, 520, 1185, 663], 'isClick': true }
     let confirmRefresh = { 'template': './assets/img/突破/个人突破/刷新确认.bmp', 'region': [645, 350, 895, 521], 'isClick': true }
-    let formula = { 'template': './assets/img/公用/式神录.bmp', 'region': [1175, 578, 1279, 700], 'isColor': true, 'colorThreshold': 8 }
+    let formula = { 'template': './assets/img/公用/式神录.bmp', 'region': [1175, 578, 1279, 700], 'isColor': true, 'colorThreshold': 15 }
     let exitConfirm = { 'template': './assets/img/突破/个人突破/退出确认.bmp', 'region': [653, 357, 835, 486], 'isClick': true }
     let attack = { 'template': './assets/img/突破/进攻.bmp', 'isClick': true }
     let X2 = { 'template': './assets/img/公用/X2.bmp', 'region': [65, 575, 220, 688] }
     let ready = { 'template': './assets/img/公用/准备.bmp', 'isClick': true, 'region': [1000, 500] }
+    let start = Date.now();
     while (true) {
+        debug({start});
         if (findImg(presonBreakthrough)) break;
         if (findImg(breakthrough)) {
             randomClick({ region: [250, 640, 300, 690] });
@@ -63,6 +67,7 @@ module.exports = function (params) {
     }
     log('突破界面');
     while (true) {
+        debug({ start });
         if (((numberOfVictory < 3 && numberOfFailures > 0)) || numberOfFailures > 4) {
             while (true) {
                 if (findImg(refresh)) console.info('刷新');
@@ -115,13 +120,20 @@ module.exports = function (params) {
             attack.isColor = false;
         }
         findImg(ready)
-        if (settlement(settlement1)) numberOfVictory++;
+        if (settlement(settlement1)) {
+            start = Date.now();
+            numberOfVictory++;
+        }
         settlement(settlement2);
-        if (settlement(fail)) numberOfFailures++;
+        if (settlement(fail)) {
+            start = Date.now();
+            numberOfFailures++;
+        }
         sleep(800);
         协作检测()
     }
     while (true) {
+        debug({ start });
         if (findImg(close)) {
             sleep(3000);
             if (!findImg(close)) return numberOfVictory;

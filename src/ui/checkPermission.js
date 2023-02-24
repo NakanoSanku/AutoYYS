@@ -9,7 +9,7 @@ module.exports=function () {
     })
         //.on("positive", download)
         .on("neutral", () => {
-            auto();
+            auto.waitFor();
             try {
                 toastLog('已获取无障碍权限');
             } catch (error) {

@@ -1,6 +1,8 @@
 const { findImg } = require("../base/search");
 const settlement = require("./settlement");
 const 协作检测 = require("./协作检测");
+const debug = require("../debug");
+
 /**
  * 
  * @param {{
@@ -11,6 +13,7 @@ const 协作检测 = require("./协作检测");
  * screenshotLoad:截图根路径}} params 
  */
 module.exports = function (params) {
+    let delayTime = params.delayTime || 800;
     let screenshotLoad = params.screenshotLoad || './assets/img/';
     let challenge = { 'template': screenshotLoad + '御魂/挑战.bmp', 'isClick': true, 'isColor': true, 'region': [1129, 568, 1279, 719] };
     let settlementArray = params.settlementArray || [[10, 120, 250, 550], [1100, 50, 1280, 720]];
@@ -22,13 +25,16 @@ module.exports = function (params) {
     }
     let times = params.times || 0;
     let i = 0;
+    let start = Date.now();
     while (i < times) {
+        debug({ start });
         if (params.leader) findImg(challenge);
         if (settlement(settlement1)) {
             i++;
+            start = Date.now();
             console.log('当前第' + i + '次结算');
         }
-        if (params.speed) sleep(800);
+        if (params.speed) sleep(delayTime);
         协作检测()
     }
 }

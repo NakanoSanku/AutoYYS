@@ -1,4 +1,5 @@
 const { findImg } = require("../base/search");
+const debug = require("../debug");
 const settlement = require("./settlement");
 const 协作检测 = require("./协作检测");
 /**
@@ -10,6 +11,7 @@ const 协作检测 = require("./协作检测");
  * settlementArray:自定义结算}} params 
  */
 module.exports = function (params) {
+    let delayTime = params.delayTime || 800;
     let screenshotLoad = params.screenshotLoad || './assets/img/';
     let challenge = { 'template': screenshotLoad + '御灵/御灵.bmp', 'isClick': true,'region': [1030, 535, 1279, 719] };
     let settlementArray = params.settlementArray || [[10, 120, 250, 550], [1100, 50, 1280, 720]];
@@ -26,14 +28,17 @@ module.exports = function (params) {
     }
     let times = params.times || 0;
     let i = 0;
+    let start = Date.now();
     while (i < times) {
+        debug({ start });
         findImg(challenge);
         settlement(settlement2);//结算二
         if (settlement(settlement1)) {
             i++;
+            start = Date.now();
             console.log('当前第' + i + '次结算');
         };//结算一
-        if (params.speed) sleep(800);
+        if (params.speed) sleep(delayTime);
         协作检测()
     }
 }

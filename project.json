@@ -1,7 +1,16 @@
 {
   "assets": [],
+  "build": {
+    "build_id": "25C5601A-4",
+    "build_number": 4,
+    "build_time": 1677151102343,
+    "release": false
+  },
   "encryptLevel": 0,
-  "useFeatures": [],
+  "features": {
+    "activityIntentTasks": false,
+    "nodejs": "disabled"
+  },
   "launchConfig": {
     "displaySplash": true,
     "hideLogs": false,
@@ -11,15 +20,19 @@
   "main": "main.js",
   "name": "InsiderPro",
   "optimization": {
+    "obfuscateComponents": false,
+    "removeAccessibilityService": false,
     "removeOpenCv": false,
     "unusedResources": false
   },
   "packageName": "org.test.insider",
+  "permissionConfig": {
+    "requestListOnStartup": [
+      "android.permission.WRITE_EXTERNAL_STORAGE"
+    ]
+  },
   "scripts": {},
+  "useFeatures": [],
   "versionCode": 1,
-  "versionName": "1.0.0",
-  "ignore": [
-    "build",
-    "node_modules"
-  ]
+  "versionName": "1.0.0"
 }

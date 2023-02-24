@@ -1,6 +1,8 @@
 const { findImg } = require("../base/search");
 const settlement = require("./settlement");
 const 协作检测 = require("./协作检测");
+const debug = require("../debug");
+
 /**
  * 
  * @param {{
@@ -21,10 +23,13 @@ module.exports = function (params) {
     }
     let times = params.times || 0;
     let i = 0;
+    let start = Date.now();
     while (i < times) {
+        debug({ start });
         findImg(challenge);
         if (settlement(settlement1)) {
             i++;
+            start = Date.now();
             console.log('当前第' + i + '次结算');
         }
         if (params.speed) sleep(800);

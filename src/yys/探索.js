@@ -1,5 +1,6 @@
-const { smlMove, randomClick } = require("../base/base");
+const { smlMove, randomClick, createPoint } = require("../base/base");
 const { findImg } = require("../base/search");
+const debug = require("../debug");
 const settlement = require("./settlement");
 const 协作检测 = require("./协作检测");
 
@@ -23,6 +24,7 @@ module.exports = function (params) {
     let boss = { 'template': screenshotLoad + '探索/大怪.bmp', 'isClick': true }
     let chest = { 'template': screenshotLoad + '探索/宝箱.bmp', 'isClick': true }
     let method = params.settlementArray != undefined ? 2 : 1;
+    let delayTime = params.delayTime || 800;
     var settlementArray = params.settlementArray || [[10, 120, 250, 600], [1100, 50, 1280, 720]];
     let settlement1 = {
         'imgConfig': { 'template': screenshotLoad + '公用/结算.bmp', 'region': [3, 3, 165, 718] },
@@ -31,7 +33,10 @@ module.exports = function (params) {
     }
     var mark = 0;
     var i = 0;
+    var smlMoveTimes = 0;
+    let start = Date.now();
     while (i < params.times) {
+        debug({ start });
         chapter.isClick = false;
         if (findImg(chapter)) {
             if (!findImg(chest)) {
@@ -46,25 +51,34 @@ module.exports = function (params) {
             sleep(500);
             console.info('进入探索');
         }
-        if (findImg(formula)&&mark==0) {
+        if (findImg(formula) && mark == 0) {
             if (findImg(boss)) {
+                smlMoveTimes = 0;
                 boss.isClick = false;
                 sleep(1000);
                 if (!findImg(boss)) {
                     console.info('探索完成');
-                    mark=1;
+                    mark = 1;
                 }
                 boss.isClick = true;
             } else if (findImg(mob)) {
+                smlMoveTimes = 0;
                 sleep(1000);
             } else {
-                smlMove(random(1000, 1100), random(115, 210), random(500, 600), random(115, 210), random(400, 500));
+                firstPoint = createPoint([1000, 115, 1100, 210])
+                lastPoint = createPoint([500, 115, 600, 210])
+                smlMove(firstPoint.x, firstPoint.y, lastPoint.x, lastPoint.y, random(400, 500));
+                smlMoveTimes++;
+                if (smlMoveTimes == 5) {
+                    mark = 1;
+                    smlMoveTimes = 0;
+                }
                 console.log("滑动");
             }
         }
-        
         if (settlement(settlement1)) {
             i++;
+            start = Date.now();
             console.info(i + '次结算完成');
         };
         if (mark == 1 && findImg(formula)) {
@@ -73,11 +87,12 @@ module.exports = function (params) {
             sleep(1500);
         }
         if (findImg(exitButton)) sleep(1000);
-        if (params.speed) sleep(800);
+        if (params.speed) sleep(delayTime);
         协作检测()
     }
     //回
     while (true) {
+        debug({ start });
         if (findImg(formula)) randomClick({ 'region': [27, 38, 65, 91] })
         协作检测()
         findImg(exitButton);
