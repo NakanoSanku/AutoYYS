@@ -1,0 +1,25 @@
+{
+  "assets": [],
+  "encryptLevel": 0,
+  "useFeatures": [],
+  "launchConfig": {
+    "displaySplash": true,
+    "hideLogs": false,
+    "splashText": "Powered by Insider",
+    "stableMode": false
+  },
+  "main": "main.js",
+  "name": "InsiderPro",
+  "optimization": {
+    "removeOpenCv": false,
+    "unusedResources": false
+  },
+  "packageName": "org.test.insider",
+  "scripts": {},
+  "versionCode": 1,
+  "versionName": "1.0.0",
+  "ignore": [
+    "build",
+    "node_modules"
+  ]
+}
