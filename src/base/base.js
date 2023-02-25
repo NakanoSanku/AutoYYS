@@ -65,7 +65,7 @@ function checkPoint(Point, param) {
  * @param {[Xmin,Ymin,Xmax,Ymax]} param 
  * @returns 
  */
-base.formatRegion = function(params) {
+base.formatRegion = function (params) {
     if (params.length == 4) {
         return [params[0], params[1], params[2] - params[0], params[3] - params[1]]
     } else if (params.length == 2) {
@@ -74,7 +74,7 @@ base.formatRegion = function(params) {
         return params
     }
 }
-base.createPoint = function(params) {
+base.createPoint = function (params) {
     let region = base.formatRegion(params); //转换成x，y，w，h的形式
     Point = centralPoint(region); //获取范围中心点坐标
     Point.x += Math.pow(-1, random(0, 99)) * randomNumber(region[2] / 2);
@@ -89,24 +89,24 @@ base.createPoint = function(params) {
  * @param {*} zy
  * @param {*} time
  */
-base.smlMove = function(qx, qy, zx, zy, time) {
+base.smlMove = function (qx, qy, zx, zy, time) {
     let slidingPath = [time];
     let point = [{
-            x: qx,
-            y: qy
-        },
-        {
-            x: random(qx - 100, qx + 100),
-            y: random(qy, qy + 50)
-        },
-        {
-            x: random(zx - 100, zx + 100),
-            y: random(zy, zy + 50)
-        },
-        {
-            x: zx,
-            y: zy
-        },
+        x: qx,
+        y: qy
+    },
+    {
+        x: random(qx - 100, qx + 100),
+        y: random(qy, qy + 50)
+    },
+    {
+        x: random(zx - 100, zx + 100),
+        y: random(zy, zy + 50)
+    },
+    {
+        x: zx,
+        y: zy
+    },
     ];
     for (let i = 0; i < 1; i += 0.08) {
         let newPoint = bezier(point, i);
@@ -126,7 +126,7 @@ base.smlMove = function(qx, qy, zx, zy, time) {
  * method = 2 时 点击操作     
  * 传入point为定点操作
  */
-base.randomClick = function(params) {
+base.randomClick = function (params) {
     let method = params.method || 1;
     //根据范围生成坐标
     var Point = {
@@ -141,13 +141,13 @@ base.randomClick = function(params) {
                 let i = Math.abs(normalRandom(0, 30));
                 if (i > 90) {
                     press(Point.x, Point.y, random(200, 300));
-                    //console.log('长按');
+                    console.log('长按' + Point);
                 } else if (i > 60) {
                     base.smlMove(Point.x, Point.y, Point.x + random(0, 3), Point.y + random(0, 3), random(50, 80));
-                    //console.log('滑动');
+                    console.log('滑动');
                 } else {
                     press(Point.x, Point.y, random(80, 150));
-                    //console.log('点击');
+                    console.log('点击' + Point);
                 }
                 break;
             case 2:

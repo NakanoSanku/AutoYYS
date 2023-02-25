@@ -42,7 +42,10 @@ search.findImg = function (params) {
             randomClick({ 'region': [point.x, point.y, point.x + template.width, point.y + template.height] });
         }
     }
-    if (typeof (params.template) == 'string') template.recycle();//回收模板对象
+    if (typeof (params.template) == 'string') {
+        console.log('success find ' + params.template.split('.')[0]);
+        template.recycle()
+    };//回收模板对象
     //console.timeEnd('找图');
     return res;//返回真值
 }
