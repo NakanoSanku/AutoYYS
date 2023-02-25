@@ -41,9 +41,7 @@ module.exports = function (params) {
         'settlementArray': settlementArray
     }
     let fail = {
-        'imgConfig': { 'template': './assets/img/公用/失败结算.bmp', 'region': [330, 79, 645, 351], 'isColor': true, 'threshold': 0.6 },
-        'method': method,
-        'settlementArray': settlementArray
+        'imgConfig': { 'template': './assets/img/公用/失败结算.bmp', 'region': [330, 79, 645, 351], 'isColor': true, 'threshold': 0.6 }
     }
     let beat = {}
     let close = { 'template': './assets/img/公用/退出.bmp', 'region': [1157, 74, 1259, 183], 'isClick': true }
