@@ -43,7 +43,7 @@ search.findImg = function (params) {
         }
     }
     if (typeof (params.template) == 'string') {
-        console.log('success find ' + params.template.split('.')[0]);
+        if(res) console.log('success find ' + params.template);
         template.recycle()
     };//回收模板对象
     //console.timeEnd('找图');

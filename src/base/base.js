@@ -141,13 +141,13 @@ base.randomClick = function (params) {
                 let i = Math.abs(normalRandom(0, 30));
                 if (i > 90) {
                     press(Point.x, Point.y, random(200, 300));
-                    console.log('长按' + Point);
+                    console.log('长按' + 'x:'+Point.x+' y:'+Point.y);
                 } else if (i > 60) {
                     base.smlMove(Point.x, Point.y, Point.x + random(0, 3), Point.y + random(0, 3), random(50, 80));
                     console.log('滑动');
                 } else {
                     press(Point.x, Point.y, random(80, 150));
-                    console.log('点击' + Point);
+                    console.log('点击' + 'x:' + Point.x + ' y:' + Point.y);
                 }
                 break;
             case 2:
