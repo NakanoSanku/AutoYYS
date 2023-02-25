@@ -139,7 +139,7 @@ ui.console.input.setTextColor(colors.BLACK);
 // 隐藏输入框
 ui.console.setInputEnabled(false);
 // 自定义日志颜色
-ui.console.setColor("V", "#bdbdbd");
+ui.console.setColor("V", "#000000");
 ui.console.setColor("D", "#795548");
 ui.console.setColor("I", "#1de9b6");
 ui.console.setColor("W", "#673ab7");
