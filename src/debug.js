@@ -6,8 +6,7 @@
  */
 module.exports = function (params) {
     runTime = Date.now - params.start;
-    if (runTime/60000 > 3) {
-        engines.stopAll();
+    if (runTime / 60000 > 3) {
         var storage = storages.create("todoList");
         if (storage.get("是否开启卡住推送")) {
             let url = "http://www.pushplus.plus/send";
@@ -18,5 +17,6 @@ module.exports = function (params) {
             });
             log(r.body.string());
         }
+        engines.stopAll();
     }
 }
