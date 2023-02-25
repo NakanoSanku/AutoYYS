@@ -195,8 +195,8 @@ if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
  */
 //创建选项菜单(右上角)
 ui.emitter.on("create_options_menu", menu => {
-    menu.add("清空日志文件");
-    menu.add("保存日志文件");
+    menu.add("清空日志");
+    menu.add("保存日志");
     menu.add("使用说明");
     menu.add("关于");
 });
@@ -208,11 +208,11 @@ ui.emitter.on("options_item_selected", (e, item) => {
             break;
         case "关于":
             alert("关于", "insider v1.0.0");
-        case "清空日志文件":
+        case "清空日志":
             console.clear();
             ui.globalconsole.clear();
             break;
-        case "保存日志文件":
+        case "保存日志":
             console.setGlobalLogConfig({ file: '/sdcard/log.txt' });
             app.viewFile('/sdcard/log.txt');
             break;
@@ -224,7 +224,7 @@ activity.setSupportActionBar(ui.toolbar);
  * 滑动页面
  */
 //设置滑动页面的标题
-ui.viewpager.setTitles(["任务方案配置", "日常功能配置", "额外特殊配置", "全局日志输出"]);
+ui.viewpager.setTitles(["任务方案", "日常功能", "其他配置", "全局日志"]);
 var fabMenuIsShow = true;
 ui.viewpager.setOnTouchListener({
     onTouch: function (view, event) {
