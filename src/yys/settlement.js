@@ -12,8 +12,9 @@ const 协作检测 = require("./协作检测");
  */
 module.exports = function (params) {
     let method = params.method || 1;
+    let configuration;
     if (findImg(params.imgConfig)) {
-        let configuration = params.settlementArray[random(0, params.settlementArray.length - 1)];
+        if (method=2) configuration = params.settlementArray[random(0, params.settlementArray.length - 1)];
         while (findImg(params.imgConfig)) {
             协作检测()
             switch (method) {
