@@ -18,7 +18,7 @@
     "stableMode": false
   },
   "main": "main.js",
-  "name": "InsiderPro",
+  "name": "Insider for yys",
   "optimization": {
     "obfuscateComponents": false,
     "removeAccessibilityService": false,
