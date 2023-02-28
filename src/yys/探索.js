@@ -27,7 +27,7 @@ module.exports = function (params) {
     let delayTime = params.delayTime || 800;
     var settlementArray = params.settlementArray || [[10, 120, 250, 600], [1100, 50, 1280, 720]];
     let settlement1 = {
-        'imgConfig': { 'template': screenshotLoad + '公用/结算.bmp', 'region': [3, 3, 165, 718] },
+        'imgConfig': { 'template': screenshotLoad + '公用/结算.bmp', 'region': [3, 3, 165, 718], 'isColor': true },
         'method': method,
         'settlementArray': settlementArray
     }
