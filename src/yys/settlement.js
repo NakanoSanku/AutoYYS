@@ -21,6 +21,7 @@ module.exports = function (params) {
       switch (method) {
         case 1:
           randomClick({region: configuration});
+          console.log("common");
           break;
         case 2:
           configuration = params.settlementArray[random(0, params.settlementArray.length - 1)];

@@ -1,5 +1,7 @@
 "ui";
 
+const readConfig = require("./src/readConfig");
+
 importClass(android.widget.SeekBar);
 importClass(android.os.Build);
 importClass(android.view.WindowManager);
@@ -108,12 +110,6 @@ ui.layout(
                   </vertical>
                   <View bg="{{color}}" h="*" w="10" />
                 </card>
-              </vertical>
-            </scroll>
-          </frame>
-          <frame>
-            <scroll layout_weight="1">
-              <vertical padding="16dp">
                 <card
                   w="*"
                   h="auto"
@@ -126,7 +122,7 @@ ui.layout(
                     <text
                       textSize="20sp"
                       marginBottom="14dp"
-                      text="配置"
+                      text="其他配置"
                       marginTop="14dp"
                       marginLeft="14dp"
                     />
@@ -159,6 +155,21 @@ ui.layout(
                         layout_verticalCenter="true"
                       />
                     </horizontal>
+
+                    <horizontal>
+                      <text
+                        textSize="15sp"
+                        text="配置文件地址:"
+                        marginLeft="10dp"
+                        layout_verticalCenter="true"
+                      />
+                      <input
+                        textSize="15sp"
+                        marginLeft="2dp"
+                        layout_verticalCenter="true"
+                        id="configPath"
+                      />
+                    </horizontal>
                     <checkbox
                       id="是否开启自定义结算"
                       marginRight="6dp"
@@ -172,7 +183,6 @@ ui.layout(
                         layout_verticalCenter="true"
                       />
                       <input
-                        text="/sdcard/Download/test.txt"
                         textSize="15sp"
                         marginLeft="2dp"
                         layout_verticalCenter="true"
@@ -184,29 +194,16 @@ ui.layout(
                       text="保存自定义"
                       id="savePersonalConfig"
                     ></button>
-                    <checkbox
-                      id="是否开启卡住推送"
-                      marginRight="6dp"
-                      text="是否开启卡住推送"
-                    />
-                    <horizontal>
-                      <text
-                        textSize="15sp"
-                        text="pushplus-token:"
-                        marginLeft="10dp"
-                        layout_verticalCenter="true"
-                      />
-                      <input
-                        text="请输入token"
-                        textSize="15sp"
-                        marginLeft="2dp"
-                        layout_verticalCenter="true"
-                        id="pushplusToken"
-                      />
-                    </horizontal>
                   </vertical>
                   <View bg="{{color}}" h="*" w="10" />
                 </card>
+              </vertical>
+            </scroll>
+          </frame>
+          <frame>
+            <scroll layout_weight="1">
+              <vertical padding="16dp">
+                <webview id="webview" h="*" w="*" />
               </vertical>
             </scroll>
           </frame>
@@ -269,7 +266,9 @@ ui.layout(
     </vertical>
   </drawer>
 );
-
+ui.webview.loadUrl(
+  "https://github.com/NakanoSanku/AutoYYS/blob/461d8239854895f2ec66ee676a78fd93bbbfd7f3/README.md"
+);
 /**
  * 启动按钮
  */
@@ -291,7 +290,7 @@ ui.start.on("click", () => {
       runThread = null;
     }
     let dir = files.cwd();
-    runThread = engines.execScriptFile(dir+"/start.js");
+    runThread = engines.execScriptFile(dir + "/start.js");
     setTimeout(() => {
       toastLog("脚本启动中！请耐心等待");
     }, 500);
@@ -344,7 +343,7 @@ activity.setSupportActionBar(ui.toolbar);
  * 滑动页面
  */
 //设置滑动页面的标题
-ui.viewpager.setTitles(["任务方案", "日常功能", "其他配置"]);
+ui.viewpager.setTitles(["任务方案", "功能配置", "使用说明"]);
 var fabMenuIsShow = true;
 ui.viewpager.setOnTouchListener({
   onTouch: function (view, event) {
@@ -521,17 +520,48 @@ ui.list.on("item_bind", function (itemView, itemHolder) {
   });
 });
 ui.savePersonalConfig.on("click", function () {
-  var personalConfigData = files.read(ui.personalConfig.text()).split("\r\n");
-  var coordinate = {};
-  var coordinateArray = [];
-  for (let index = 0; index < personalConfigData.length; index++) {
-    coordinate.x = personalConfigData[index].split("X")[0];
-    coordinate.y = personalConfigData[index].split("X")[0].split("Y")[0];
-    index++;
-    coordinateArray.push(coordinate);
+  let dataList;
+
+  files.write("/sdcard/config.txt", "");
+  if (files.exists(ui.personalConfig.text())) {
+    if (files.isDir(ui.personalConfig.text())) {
+      console.log("目录");
+      files
+        .listDir(ui.personalConfig.text(), function (name) {
+          return name.endsWith(".txt") && files.isFile(files.join(dir, name));
+        })
+        .forEach((element) => {
+          configScan(element).forEach((x) => {
+            dataList.append(x);
+          });
+        });
+    } else if (files.isFile(ui.personalConfig.text())) {
+      console.log("单文件");
+      dataList = configScan(files.read(ui.personalConfig.text()).split("\r\n"));
+    }
   }
-  storage.put("personalConfig", coordinateArray);
-  console.log(storage.get("personalConfig"));
+  function configScan(Data) {
+    var coordinate = {};
+    var coordinateArray = [];
+    for (let index = 0; index < Data.length; index++) {
+      coordinate.x = Data[index].split("X")[0];
+      coordinate.y = Data[index].split("X")[1].split("Y")[0];
+      coordinateArray.push({
+        x: parseInt(coordinate.x),
+        y: parseInt(coordinate.y),
+      });
+      index++;
+      log(coordinateArray);
+      files.append(
+        "/sdcard/config.txt",
+        "x:" + coordinate.x + ",y:" + coordinate.y + "\n"
+      );
+    }
+    return coordinateArray;
+  }
+  storage.put("uniqueConfig", dataList);
+  console.log(dataList);
+  toastLog("获取自定义点位成功");
 });
 var yyslist = [
   "御魂",
@@ -541,7 +571,6 @@ var yyslist = [
   "个人突破",
   "寮突",
   "活动",
-  //"自动奉纳",
   "测试",
 ];
 ui.add.on("click", () => {
@@ -579,11 +608,14 @@ function initUiValue() {
   ui.队长模式.setChecked(storage.get("队长模式", false));
   ui.是否循环任务.setChecked(storage.get("是否循环任务", false));
   ui.是否开启自定义结算.setChecked(storage.get("是否开启自定义结算", false));
-  ui.是否开启卡住推送.setChecked(storage.get("是否开启卡住推送", false));
+  ui.personalConfig.setText(
+    storage.get("personalConfig", "/sdcard/Download/config.txt")
+  );
   ui.speed.setChecked(storage.get("speed", false));
+  ui.configPath.setText(storage.get("configPath", "./src/config.json"));
   changeFabMenuState(false);
 }
-
+let config = readConfig();
 //手动保存ui中各种值
 function saveUiValue() {
   storage.put("items", items);
@@ -591,9 +623,36 @@ function saveUiValue() {
   storage.put("是否循环任务", ui.是否循环任务.checked);
   storage.put("speed", ui.speed.checked);
   storage.put("delayTime", ui.delayTime.text());
-  if (storage.get("是否开启卡住推送"))
-    storage.put("pushplusToken", ui.pushplusToken.text());
   storage.put("是否开启自定义结算", ui.是否开启自定义结算.checked);
+  storage.put("personalConfig", ui.personalConfig.text());
+  storage.put("configPath", ui.configPath.text());
+  config.speed = !ui.speed.checked;
+  config.delayTime = ui.delayTime.text();
+  if (ui.是否开启自定义结算.checked) {
+    config.settlement1.method = 2;
+    config.settlement2.method = 2;
+    config.settlement3.method = 2;
+    config.settlement1.settlementArray = storage.get("uniqueConfig");
+    config.settlement2.settlementArray = storage.get("uniqueConfig");
+    config.settlement3.settlementArray = storage.get("uniqueConfig");
+  } else {
+    config.settlement1.method = 1;
+    config.settlement2.method = 1;
+    config.settlement3.method = 1;
+    config.settlement1.settlementArray = [
+      [10, 120, 250, 550],
+      [1100, 50, 1280, 720],
+    ];
+    config.settlement2.settlementArray = [
+      [10, 120, 250, 550],
+      [1100, 50, 1280, 720],
+    ];
+    config.settlement3.settlementArray = [
+      [10, 120, 250, 550],
+      [1100, 50, 1280, 720],
+    ];
+  }
+  files.write("./src/config.json", JSON.stringify(config));
 }
 function changeFabMenuState(state) {
   if (state) {
