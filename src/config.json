@@ -1,0 +1,75 @@
+{
+  "speed": true,
+  "delayTime": 800,
+  "settlement1": {
+    "imgConfig": {
+      "template": "./assets/img/公用/结算一.bmp",
+      "region": [330, 79, 645, 351]
+    },
+    "method": 1,
+    "settlementArray": [
+      [10, 120, 250, 550],
+      [1100, 50, 1280, 720]
+    ]
+  },
+  "settlement2": {
+    "imgConfig": {
+      "template": "./assets/img/公用/结算二.bmp",
+      "region": [442, 358, 843, 684]
+    },
+    "method": 1,
+    "settlementArray": [
+      [10, 120, 250, 550],
+      [1100, 50, 1280, 720]
+    ]
+  },
+  "settlement3": {
+    "imgConfig": {
+      "template": "./assets/img/公用/结算.bmp",
+      "region": [3, 3, 165, 718]
+    },
+    "method": 1,
+    "settlementArray": [
+      [10, 120, 250, 550],
+      [1100, 50, 1280, 720]
+    ]
+  },
+  "soul": {
+    "template": "./assets/img/御魂/挑战.bmp",
+    "isClick": true,
+    "region": [1129, 568, 1279, 719]
+  },
+  "spirit": {
+    "template": "./assets/img/御灵/御灵.bmp",
+    "isClick": true,
+    "region": [1030, 535, 1279, 719]
+  },
+  "fire": {
+    "template": "./assets/img/业原火/业原火.bmp",
+    "isClick": true,
+    "region": [1060, 520, 1279, 719]
+  },
+
+  "chapter": {
+    "template": "./assets/img/探索/探索章节选择.bmp",
+    "region": [1035, 543, 1273, 676],
+    "isClick": true
+  },
+  "exploreButton": {
+    "template": "./assets/img/探索/探索按钮.bmp",
+    "region": [858, 479, 1039, 598],
+    "isClick": true
+  },
+  "exitButton": {
+    "template": "./assets/img/探索/确认.bmp",
+    "region": [670, 349, 896, 460],
+    "isClick": true
+  },
+  "formula": {
+    "template": "./assets/img/公用/式神录.bmp",
+    "region": [764, 609, 861, 710]
+  },
+  "mob": { "template": "./assets/img/探索/小怪.bmp", "isClick": true },
+  "boss": { "template": "./assets/img/探索/大怪.bmp", "isClick": true },
+  "chest": { "template": "./assets/img/探索/宝箱.bmp", "isClick": true }
+}
