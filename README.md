@@ -1,7 +1,7 @@
 # AutoYYS
 支线
 - [Python版本](https://github.com/NakanoSanku/AutoYYS/tree/autoyys-Python)
-- [AutoX版本](https://github.com/NakanoSanku/AutoYYS/tree/autoyys-auotx)
+- [AutoX版本](https://github.com/NakanoSanku/AutoYYS/tree/autoyys-autox)
 
 基于autojs 犀牛引擎开发的脚本
 
