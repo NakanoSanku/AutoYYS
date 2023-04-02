@@ -1,0 +1,38 @@
+{
+  "find_image_template": {
+    "template_path": "",
+    "region": [],
+    "threshold": 0.8,
+    "is_click": false
+  },
+  "settlement_template": {
+    "img_config": {
+      "template_path": "",
+      "region": [],
+      "threshold": 0.8,
+      "is_click": false
+    },
+    "method":1,
+    "settlementArray":[
+        [10, 120, 250, 550],
+        [1100, 50, 1280, 720]
+    ]
+  },
+  "settlement1": {
+    "img_config": {
+      "template_path": "",
+      "region": [],
+      "threshold": 0.8,
+      "is_click": false
+    },
+    "method":1,
+    "settlementArray":[
+        [10, 120, 250, 550],
+        [1100, 50, 1280, 720]
+    ]
+  },
+  "settlement2": {
+    
+  },
+  "settlement_common": {}
+}
