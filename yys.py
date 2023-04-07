@@ -1,17 +1,19 @@
-import random
 import json
-from utils import Game, choose_device
+import random
 
+from utils.game import Game
+from utils.getDevices import choose_device
 
-# #load config json -> data 
-# with open('./config.json', "r") as f:
-#     data = json.load(f)
+# load config json -> data
+with open('./config.json', "r") as f:
+    data = json.load(f)
 
 #
+
+
 class yys(Game):
     def __init__(self, serial_or_url=None):
         super().__init__(serial_or_url)
-        
 
     def settlement(self, config):
         img_config = config.get("img_config")
@@ -32,15 +34,48 @@ class yys(Game):
                     return True
         return False
 
-    # def fight_common(self, config):
-    #     mode = config.get('mode')
-    #     times = config.get('times')
-    #     leader = config.get('leader', False)
-    #     i = 0
-    #     while i < times:
-    #         if leader and mode.get("name") != 'soul':
-    #             self.find_image(mode)
-    #         if mode.get("name") != 'soul' or mode.get("name") != 'soul':
-    #             self.settlement(data["settlement1"])
-    #         elif mode.get("name") != 'soul':
-    #             self.settlement()
+    
+
+    def fight_common(self, config):
+        #格式：
+        #fight_common({"mode":data["fire"],"times":3})
+        #mode-模式
+        #业原火\御魂\御灵
+        #fire\soul\spirit
+        #times- 次数
+        mode = config.get('mode')
+        times = config.get('times')
+        leader = config.get('leader', False)
+        i = 0
+        while i < times:
+
+            if leader or mode.get("name") != 'soul':
+                self.find_image(mode)
+
+            if mode.get("name") == 'soul' or mode.get("name") == 'fire':
+                if self.settlement(data["settlement3"]):
+                    i += 1
+                    print(f"结算{i}次")
+            elif mode.get("name") == 'spirit':
+                self.settlement(data["settlement1"])
+                if self.settlement(data["settlement2"]):
+                    i += 1
+                    print(f"结算{i}次")
+
+    
+    def fighting_skills(self):
+        # 简易版自动斗鸡
+        i = 0
+        while True:
+            # 准备
+            self.find_image(data["ready"])
+            self.find_image(data["fightSkill"])
+            self.settlement(data["settlement2"])
+            self.settlement(data["settlement3"])
+            if self.settlement(data["settlement1"]):
+                i += 1
+                print(f"结算{i}次")
+
+
+g=yys(choose_device())
+# g.fighting_skills()

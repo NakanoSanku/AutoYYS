@@ -2,6 +2,7 @@ import random
 import time
 import cv2
 import numpy as np
+from utils.images import Image
 
 from utils.utils import Point, random_number
 from uiautomator2 import Device
@@ -56,12 +57,19 @@ class Game(Device):
         if region is not None:
             max_loc = (max_loc[0] + x_min, max_loc[1] + y_min)
 
-        # if is_color :
-        #     if Image.compare_color(target,  ):
-        #         return None
+        if is_color:
+            if Image.find_color(target, Image.get_color(template, Point(0, 0)), [0, 0, 10, 10], color_threshold):
+                return None
+
         if is_click:
             self.random_click([max_loc[0], max_loc[1], max_loc[0] +
                                template.shape[1], max_loc[1]+template.shape[0]])
+            
+        
+        #调试用
+        print(params)    
+        print(f"找到了{template_path}")
+        
 
         # 返回匹配结果
         return (max_loc[0], max_loc[1])

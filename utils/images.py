@@ -1,6 +1,6 @@
 class Image(object):
     @staticmethod
-    def compare_color(image, point, color, tolerance):
+    def compare_color(image, point, color, tolerance=0):
         """
         比较某一图像中某点的颜色值是否和传入颜色参数值相等。
 
@@ -17,11 +17,11 @@ class Image(object):
         r = int(color[1:3], 16)
         g = int(color[3:5], 16)
         b = int(color[5:7], 16)
-        pixel_color = image.getpixel((point.x, point.y))
+        pixel_color = image[point.y, point.x]
         # 比较颜色值
-        if abs(pixel_color[0] - r) <= tolerance and \
+        if abs(pixel_color[2] - r) <= tolerance and \
                 abs(pixel_color[1] - g) <= tolerance and \
-                abs(pixel_color[2] - b) <= tolerance:
+                abs(pixel_color[0] - b) <= tolerance:
             return True
         else:
             return False
@@ -50,3 +50,24 @@ class Image(object):
             rgb_color[0], rgb_color[1], rgb_color[2])
 
         return hex_color
+
+    @staticmethod
+    def find_color(image, color, region=None, tolerance=0):
+        # 设置查找区域
+        if region is not None:
+            x_min, y_min, x_max, y_max = region
+            image = image[y_min:y_max, x_min:x_max]
+
+        for x in range(image.shape[1]):
+            for y in range(image.shape[0]):
+                # 将颜色值转换为 RGB 分量值
+                r = int(color[1:3], 16)
+                g = int(color[3:5], 16)
+                b = int(color[5:7], 16)
+                pixel_color = image[y, x]
+                # 比较颜色值
+                if abs(pixel_color[2] - r) <= tolerance and \
+                        abs(pixel_color[1] - g) <= tolerance and \
+                        abs(pixel_color[0] - b) <= tolerance:
+                    return x, y
+        return None

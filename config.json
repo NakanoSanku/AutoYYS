@@ -12,27 +12,58 @@
       "threshold": 0.8,
       "is_click": false
     },
-    "method":1,
-    "settlementArray":[
-        [10, 120, 250, 550],
-        [1100, 50, 1280, 720]
+    "method": 1,
+    "settlementArray": [
+      [10, 120, 250, 550],
+      [1100, 50, 1280, 720]
     ]
   },
   "settlement1": {
     "img_config": {
-      "template_path": "",
-      "region": [],
-      "threshold": 0.8,
-      "is_click": false
-    },
-    "method":1,
-    "settlementArray":[
-        [10, 120, 250, 550],
-        [1100, 50, 1280, 720]
-    ]
+      "template_path": "./images/common/settlement1.bmp",
+      "region": [330, 79, 645, 351]
+    }
   },
   "settlement2": {
-    
+    "img_config": {
+      "template_path": "./images/common/settlement2.bmp",
+      "region": [442, 358, 843, 684]
+    }
   },
-  "settlement_common": {}
+  "settlement3": {
+    "img_config": {
+      "template_path": "./images/common/settlement3.bmp",
+      "region": [3, 3, 165, 718]
+    }
+  },
+  "soul": {
+    "name": "soul",
+    "template_path": "./images/soul.bmp",
+    "region": [1129, 568, 1279, 719],
+    "is_click": true
+  },
+  "spirit": {
+    "name": "spirit",
+    "template_path": "./images/spirit.bmp",
+    "region": [1030, 535, 1279, 719],
+    "is_click": true
+  },
+  "fire": {
+    "name": "fire",
+    "template_path": "./images/fire.bmp",
+    "region": [1060, 520, 1279, 719],
+    "is_click": true
+  },
+  "fightSkill": {
+    "template_path": "./images/fightskill.png",
+    "region": [1000, 500, 1270, 719],
+    "threshold": 0.8,
+    "is_click": true
+  },
+  "ready": {
+    "template_path": "./images/ready.bmp",
+    "region": [1000, 500, 1270, 719],
+    "threshold": 0.8,
+    "is_click": true
+  }
 }
