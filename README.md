@@ -1,3 +1,4 @@
+
 # autoyys-Python
 - [x] 图像识别 0.5s
 - [x] 范围随机点击 
