@@ -18,52 +18,85 @@
       [1100, 50, 1280, 720]
     ]
   },
-  "settlement1": {
+  "settleWin": {
     "img_config": {
-      "template_path": "./images/common/settlement1.bmp",
+      "template_path": "images/yys/SettleWin.bmp",
       "region": [330, 79, 645, 351]
     }
   },
-  "settlement2": {
+  "settleReward": {
     "img_config": {
-      "template_path": "./images/common/settlement2.bmp",
+      "template_path": "images/yys/SettleReward.bmp",
       "region": [442, 358, 843, 684]
     }
   },
-  "settlement3": {
+  "settleShow": {
     "img_config": {
-      "template_path": "./images/common/settlement3.bmp",
+      "template_path": "images/yys/SettleShow.bmp",
       "region": [3, 3, 165, 718]
     }
   },
   "soul": {
     "name": "soul",
-    "template_path": "./images/soul.bmp",
+    "template_path": "images/yys/Soul.bmp",
     "region": [1129, 568, 1279, 719],
     "is_click": true
   },
   "spirit": {
     "name": "spirit",
-    "template_path": "./images/spirit.bmp",
+    "template_path": "images/yys/Spirit.bmp",
     "region": [1030, 535, 1279, 719],
     "is_click": true
   },
   "fire": {
     "name": "fire",
-    "template_path": "./images/fire.bmp",
+    "template_path": "images/yys/Fire.bmp",
     "region": [1060, 520, 1279, 719],
     "is_click": true
   },
   "fightSkill": {
-    "template_path": "./images/fightskill.png",
+    "template_path": "images/yys/FightSkill.png",
     "region": [1000, 500, 1270, 719],
-    "threshold": 0.8,
     "is_click": true
   },
   "ready": {
-    "template_path": "./images/ready.bmp",
+    "template_path": "images/yys/Ready.bmp",
     "region": [1000, 500, 1270, 719],
-    "threshold": 0.8,
+    "is_click": true
+  },
+  "chest": {
+    "template_path": "images/yys/Chest.bmp",
+    "is_click": true
+  },
+  "boss": {
+    "template_path": "images/yys/Boss.bmp",
+    "is_click": true
+  },
+  "monster": {
+    "template_path": "images/yys/Monster.bmp",
+    "is_click": true
+  },
+  "formula": {
+    "template_path": "images/yys/Formula.bmp"
+  },
+  "chapter": {
+    "template_path": "images/yys/Chapter.bmp",
+    "is_click": true
+  },
+  "team": {
+    "template_path": "images/yys/Team.bmp",
+    "is_click": true
+  },
+  "explore": {
+    "template_path": "images/yys/Explore.bmp",
+    "is_click": true
+  },
+  "exploreConfirm": {
+    "template_path": "images/yys/ExploreConfirm.bmp",
+    "is_click": true
+  },
+  "exit": {
+    "template_path": "images/yys/Exit.bmp",
     "is_click": true
   }
 }

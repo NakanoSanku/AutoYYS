@@ -35,7 +35,6 @@ class Game(Device):
         is_color = params.get('is_color', False)
         color_threshold = params.get('color_threshold', 30)
 
-        self.screenshot(target_path)
         # 读取模板图像和目标图像
         template = cv2.imread(template_path, cv2.IMREAD_GRAYSCALE)
         target = cv2.imread(target_path, cv2.IMREAD_GRAYSCALE)
@@ -67,8 +66,8 @@ class Game(Device):
             
         
         #调试用
-        print(params)    
-        print(f"找到了{template_path}")
+        # print(params)    
+        print(f"Success Find Image {template_path.split('/').pop().split('.')[0]}!")
         
 
         # 返回匹配结果
