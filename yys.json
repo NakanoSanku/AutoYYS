@@ -1,0 +1,116 @@
+{
+  "找图模板": {
+    "template": "模板图片或者地址",
+    "region": "找图范围",
+    "threshold": "找图相似度",
+    "isColor": "是否找色",
+    "colorThreshold": "颜色相似度"
+  },
+  "结算模板": {
+    "imgConfig": {
+      "template": "模板图片或者地址",
+      "region": "找图范围",
+      "threshold": "找图相似度",
+      "isColor": "是否找色",
+      "colorThreshold": "颜色相似度"
+    },
+    "settlementArray": [
+      [10, 120, 250, 550],
+      [1100, 50, 1280, 720]
+    ],
+    "method": 1
+  },
+  "accpet": {
+    "template": "./img/公用/Accpet.png"
+  },
+  "御魂": {
+    "template": "./img/御魂/挑战.bmp",
+    "isColor": true
+  },
+  "御灵": {
+    "template": "./img/御灵/御灵.bmp"
+  },
+  "业原火": {
+    "template": "./img/业原火/业原火.bmp"
+  },
+  "settleView": {
+    "imgConfig": {
+      "template": "./img/公用/结算.bmp"
+    }
+  },
+  "settleReward": {
+    "imgConfig": {
+      "template": "./img/公用/结算二.bmp"
+    }
+  },
+  "settleWin": {
+    "imgConfig": {
+      "template": "./img/公用/结算一.bmp",
+      "isColor": true
+    }
+  },
+  "settleFail": {
+    "imgConfig": {
+      "template": "./img/公用/失败结算.bmp",
+      "isColor": true
+    }
+  },
+  "close": {
+    "template": "./img/公用/退出.bmp"
+  },
+  "chapter": {
+    "template": "./img/探索/二十八章.png",
+    "threshold": 0.9
+  },
+  "chest": {
+    "template": "./img/探索/宝箱.bmp"
+  },
+  "exploreButton": {
+    "template": "./img/探索/探索按钮.bmp"
+  },
+  "formula": {
+    "template": "./img/公用/式神录.bmp"
+  },
+  "exit": {
+    "template": "./img/公用/退出1.png"
+  },
+  "exitButton": {
+    "template": "./img/探索/确认.bmp"
+  },
+  "mob": {
+    "template": "./img/探索/小怪.bmp"
+  },
+  "boss": {
+    "template": "./img/探索/大怪.bmp"
+  },
+  "presonBreakthrough": {
+    "template": "./img/突破/个人突破/个人突破.bmp",
+    "threshold": 0.9,
+    "isColor": true
+    },
+  "breakthrough": {
+    "template": "./img/突破/结界突破.png"
+  },
+  "refresh": {
+    "template": "./img/突破/个人突破/刷新.bmp"
+  },
+  "confirmRefresh": {
+    "template": "./img/突破/个人突破/刷新确认.bmp"
+  },
+  "tupo_formula": {
+    "template": "./img/公用/式神录.bmp"
+  },
+  "beat": {
+    "template": "./img/突破/已突破.bmp",
+    "threshold": 0.6
+  },
+  "exitConfirm": { "template": "./img/突破/个人突破/退出确认.bmp" },
+  "attack": {
+    "template": "./img/突破/进攻.bmp"
+  },
+  "ready": {
+    "template": "./img/公用/准备.bmp"
+  },
+  "tupo_close": { "template": "./img/公用/退出.bmp" },
+  "tupo_exit": { "template": "./img/突破/突破退出.png" }
+}
