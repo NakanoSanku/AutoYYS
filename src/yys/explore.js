@@ -13,6 +13,9 @@ const settle = require("./settle");
  */
 module.exports = function (times, speed, delayTime) {
   const filePath = "./yys.json";
+  if (storages.create("todoList").get("configPath") && storages.create("todoList").get("configPath") !== "") {
+    filePath = storages.create("todoList").get("configPath")
+  }
   let json = JSON.parse(files.read(filePath));
   let mark = 0;
   let i = 0;
@@ -87,9 +90,7 @@ module.exports = function (times, speed, delayTime) {
     if (settle(json.settleView)) console.info(`${++i}次结算完成`);
     //退出探索
     if (mark == 1) {
-      p = findImg(json.exit, true);
-      if (p) {
-        json.exit.region = json.exit.region || enlargeRegion(p, w, h);
+      if (findImg(json.exit, true)) {
         mark = 0;
         sleep(1500);
       }
@@ -105,10 +106,7 @@ module.exports = function (times, speed, delayTime) {
   let j = 0;
   while (true) {
     findImg(json.exitButton, true);
-    p = findImg(json.close, true);
-    if (p) {
-      json.close.region = json.close.region || enlargeRegion(p, w, h);
-    }
+    findImg(json.close, true);
     if (findImg(json.chapter)) {
       j++;
     } else {

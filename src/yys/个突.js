@@ -3,23 +3,17 @@ const { findImg } = require("../core/game");
 const { enlargeRegion } = require("../core/utils");
 const settle = require("./settle");
 
-const Breach = [
-  [250, 144, 470, 270],
-  [570, 144, 800, 270],
-  [900, 144, 1130, 270],
-  [250, 280, 470, 405],
-  [570, 280, 800, 405],
-  [893, 280, 1130, 405],
-  [250, 420, 470, 540],
-  [570, 420, 800, 540],
-  [900, 420, 1130, 540],
-];
+
 
 module.exports = function () {
   const w = device.width > device.height ? device.width : device.height;
   const h = device.width > device.height ? device.height : device.width;
   const filePath = "./yys.json";
+  if (storages.create("todoList").get("configPath") && storages.create("todoList").get("configPath") !== "") {
+    filePath = storages.create("todoList").get("configPath")
+  }
   let json = JSON.parse(files.read(filePath));
+  const Breach = json.breach;
   let numberOfFailures = 0;
   let numberOfVictory = 0;
   let index = 0;

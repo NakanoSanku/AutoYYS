@@ -72,4 +72,38 @@ game.findImg = function (params, isClick) {
   } //回收模板对象
   return res ? region : null;
 };
+/**
+ * 
+ * @param {paddleOcr} paddle paddle ocr创建的对象
+ * @param {str} content 查找文本
+ * @param {boolean} isClick 是否点击 默认为false
+ * @param {boolean} isDimFind 是否模糊查找 查找识别到的整段文本是否存在需匹配的文本 默认为true
+ * @returns 
+ */
+game.paddleOcr = function (paddle, content, isClick, isDimFind) {
+  if (isDimFind === undefined) isDimFind = true
+  if (isClick === undefined) isClick = false
+  let ocrResult = null;
+  let result = false;
+  let res = paddle.detect(captureScreen());
+  if (res && res.length > 0) {
+    for (let i = 0; i < res.length; i++) {
+      ocrResult = res[i];
+      if (isDimFind && ocrResult.text.indexOf(content) != -1) {
+        result = true;
+      } else if (content === ocrResult.text) {
+        result = true;
+      } else {
+        ocrResult = null;
+      }
+      if (result) {
+        console.log(ocrResult);
+        if (isClick) {
+          randomClick([ocrResult.bounds.left, ocrResult.bounds.top, ocrResult.bounds.right, ocrResult.bounds.bottom]);
+        }
+      }
+    }
+  }
+  return ocrResult
+};
 module.exports = game;

@@ -146,7 +146,7 @@ ui.layout(
                     <text
                       textSize="20sp"
                       marginBottom="14dp"
-                      text="额外配置"
+                      text="推送服务"
                       marginTop="14dp"
                       marginLeft="14dp"
                     />
@@ -161,9 +161,33 @@ ui.layout(
                     <horizontal>
                     <text text="Token:" textColor="blue" textStyle="bold"></text>
                     <input id="pushplusToken" w="*">
-                    </input>
+                      </input>
                   </horizontal>
                     <text autoLink="web" text="pushplus官网: https://www.pushplus.plus/" textStyle="bold" ></text>
+                  </vertical>
+                  <View bg="{{color}}" h="*" w="10" />
+                </card>
+                <card
+                  w="*"
+                  h="auto"
+                  margin="10 5"
+                  cardCornerRadius="5dp"
+                  cardElevation="1dp"
+                  gravity="center_vertical"
+                >
+                  <vertical padding="18 8" h="auto" marginBottom="12dp">
+                    <text
+                      textSize="20sp"
+                      marginBottom="14dp"
+                      text="高级配置"
+                      marginTop="14dp"
+                      marginLeft="14dp"
+                    />
+                      <text text="警告!!!这是高级设置,相关知识不了解,请勿尝试" textColor="red" textStyle="bold"></text>
+                      <horizontal>
+                        <text text="配置文件路径:" textColor="blue" textStyle="bold"></text>
+                        <input id="configPath" w="*"></input>
+                      </horizontal>
                   </vertical>
                   <View bg="{{color}}" h="*" w="10" />
                 </card>
@@ -309,6 +333,7 @@ ui.emitter.on("options_item_selected", (e, item) => {
   }
   e.consumed = true;
 });
+
 activity.setSupportActionBar(ui.toolbar);
 /**
  * 滑动页面
@@ -386,6 +411,9 @@ ui.menu.setDataSource([
     icon: "@drawable/ic_exit_to_app_black_48dp",
   },
 ]);
+
+
+
 
 ui.menu.on("item_click", (item) => {
   switch (item.title) {
@@ -472,7 +500,7 @@ var yyslist = [
   // "寮突",
   //"活动",
   //"自动奉纳",
-  //"测试",
+  "测试",
 ];
 ui.add.on("click", () => {
   fabMenuState = !fabMenuState;
@@ -509,16 +537,22 @@ function initUiValue() {
   ui.队长模式.setChecked(storage.get("队长模式", false));
   ui.isWhile.setChecked(storage.get("isWhile", false));
   ui.isUsePushplus.setChecked(storage.get("isUsePushplus", false));
+  ui.pushplusToken.setText(storage.get("pushplusToken"))
+  ui.configPath.setText(storage.get("configPath"))
   changeFabMenuState(false);
 }
 
+// ui.SavePushplusToken.on("click", () => {
+//   storage.put("pushplusToken", ui.pushplusToken.text);//循环任务配置
+// })
 //手动保存ui中各种值
 function saveUiValue() {
   storage.put("items", items);
   storage.put("队长模式", ui.队长模式.checked);//御魂队长模式配置
   storage.put("isWhile", ui.isWhile.checked);//循环任务配置
   storage.put("isUsePushplus", ui.isUsePushplus.checked);//循环任务配置
-  storage.put("pushplusToken", ui.pushplusToken.text);//循环任务配置
+  storage.put("pushplusToken", ui.pushplusToken.getText().toString());//循环任务配置
+  storage.put("configPath", ui.configPath.getText().toString());//循环任务配置
 }
 function changeFabMenuState(state) {
   if (state) {

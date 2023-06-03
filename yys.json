@@ -15,10 +15,79 @@
       "colorThreshold": "颜色相似度"
     },
     "settlementArray": [
-      [10, 120, 250, 550],
-      [1100, 50, 1280, 720]
+      [
+        10,
+        120,
+        250,
+        550
+      ],
+      [
+        1100,
+        50,
+        1280,
+        720
+      ]
     ],
     "method": 1
+  },
+  "breach": [
+    [
+      250,
+      144,
+      470,
+      270
+    ],
+    [
+      570,
+      144,
+      800,
+      270
+    ],
+    [
+      900,
+      144,
+      1130,
+      270
+    ],
+    [
+      250,
+      280,
+      470,
+      405
+    ],
+    [
+      570,
+      280,
+      800,
+      405
+    ],
+    [
+      893,
+      280,
+      1130,
+      405
+    ],
+    [
+      250,
+      420,
+      470,
+      540
+    ],
+    [
+      570,
+      420,
+      800,
+      540
+    ],
+    [
+      900,
+      420,
+      1130,
+      540
+    ]
+  ],
+  "exit2": {
+    "template": "./img/公用/退出2.bmp"
   },
   "accpet": {
     "template": "./img/公用/Accpet.png"
@@ -56,7 +125,8 @@
     }
   },
   "close": {
-    "template": "./img/公用/退出.bmp"
+    "template": "./img/公用/退出.bmp",
+    "threshold": 0.6
   },
   "chapter": {
     "template": "./img/探索/二十八章.png",
@@ -87,7 +157,7 @@
     "template": "./img/突破/个人突破/个人突破.bmp",
     "threshold": 0.9,
     "isColor": true
-    },
+  },
   "breakthrough": {
     "template": "./img/突破/结界突破.png"
   },
@@ -104,13 +174,19 @@
     "template": "./img/突破/已突破.bmp",
     "threshold": 0.6
   },
-  "exitConfirm": { "template": "./img/突破/个人突破/退出确认.bmp" },
+  "exitConfirm": {
+    "template": "./img/突破/个人突破/退出确认.bmp"
+  },
   "attack": {
     "template": "./img/突破/进攻.bmp"
   },
   "ready": {
     "template": "./img/公用/准备.bmp"
   },
-  "tupo_close": { "template": "./img/公用/退出.bmp" },
-  "tupo_exit": { "template": "./img/突破/突破退出.png" }
+  "tupo_close": {
+    "template": "./img/公用/退出.bmp"
+  },
+  "tupo_exit": {
+    "template": "./img/突破/突破退出.png"
+  }
 }

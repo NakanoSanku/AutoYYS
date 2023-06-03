@@ -1,5 +1,6 @@
 const { getScreenCapture } = require("./src/core/utils");
 const commonFight = require("./src/yys/commonFight");
+const { returnCourtyard } = require("./src/yys/daily");
 const explore = require("./src/yys/explore");
 const 个突 = require("./src/yys/个突");
 const 协作 = require("./src/yys/协作");
@@ -33,6 +34,9 @@ function functionalChoice(params) {
         break;
       case "探索":
         explore(params.summary, true, 500);
+        break;
+      case "测试":
+        returnCourtyard();
         break;
     }
     sleep(1000);

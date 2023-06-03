@@ -21,6 +21,9 @@ const settle = require("./settle");
  */
 module.exports = function (mode, times, params) {
   let filePath = "./yys.json";
+  if (storages.create("todoList").get("configPath") && storages.create("todoList").get("configPath") !== "") {
+    filePath = storages.create("todoList").get("configPath")
+  }
   let json = JSON.parse(files.read(filePath));
   const delayTime = params.delayTime || 800;
   const isSpeed = params.isSpeed || true;

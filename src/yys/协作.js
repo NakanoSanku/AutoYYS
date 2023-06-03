@@ -4,6 +4,9 @@ const { enlargeRegion } = require("../core/utils");
 
 module.exports = function () {
     let filePath = "./yys.json";
+    if (storages.create("todoList").get("configPath") && storages.create("todoList").get("configPath") !== "") {
+        filePath = storages.create("todoList").get("configPath")
+    }
     let json = JSON.parse(files.read(filePath));
     const w = device.width > device.height ? device.width : device.height;
     const h = device.width > device.height ? device.height : device.width;
