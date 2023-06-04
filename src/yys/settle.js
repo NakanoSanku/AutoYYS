@@ -18,7 +18,7 @@ module.exports = function (params) {
     [
       Math.floor((1 / 128) * w),
       Math.floor((1 / 6) * h),
-      Math.ceil((25 / 128) * w),
+      Math.ceil((21 / 128) * w),
       Math.ceil((55 / 72) * h),
     ],
     [

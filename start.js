@@ -58,22 +58,22 @@ events.on("value", function (value) {
       let currentScreen = captureScreen();
       setInterval(function () {
         if (storage.get("isUsePushplus") && storage.get("pushplusToken") !== undefined) {
-          if (j === 36) {
-            if (images.getSimilarity(currentScreen, captureScreen()) > 0.95) {
+          if (images.getSimilarity(currentScreen, captureScreen()) > 0.9) {
+            if (j === 36) {
               let url = "http://www.pushplus.plus/send";
               let r = http.postJson(url, {
                 token: storage.get("pushplusToken"),
-                title: "YYS 脚本卡住啦",
-                content: "",
+                title: "阴阳师脚本卡住啦",
+                content: "bug",
               });
               console.warn(r.body.string());
               engines.myEngine().forceStop();
-            } else {
-              //更新截图
-              currentScreen = captureScreen();
-              j = 0;
             }
+          } else {
+            j == 0;
           }
+          //更新截图
+          currentScreen = captureScreen();
           j++;
         }
         协作();
@@ -85,6 +85,16 @@ events.on("value", function (value) {
       functionalChoice(items[index]);
     }
   } while (storage.get("isWhile"));
+  if (storage.get("isUsePushplus") && storage.get("pushplusToken") !== undefined) {
+    let url = "http://www.pushplus.plus/send";
+    let r = http.postJson(url, {
+      token: storage.get("pushplusToken"),
+      title: "阴阳师脚本任务已完成",
+      content: "success",
+    });
+    console.warn(r.body.string());
+    engines.myEngine().forceStop();
+  }
 });
 //保持脚本运行
 setInterval(() => { }, 1000);

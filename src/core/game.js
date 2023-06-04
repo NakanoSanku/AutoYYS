@@ -96,11 +96,10 @@ game.paddleOcr = function (paddle, content, isClick, isDimFind) {
       } else {
         ocrResult = null;
       }
-      if (result) {
-        console.log(ocrResult);
-        if (isClick) {
-          randomClick([ocrResult.bounds.left, ocrResult.bounds.top, ocrResult.bounds.right, ocrResult.bounds.bottom]);
-        }
+      if (result && isClick) {
+        randomClick({
+          region: [ocrResult.bounds.left, ocrResult.bounds.top, ocrResult.bounds.right, ocrResult.bounds.bottom]
+        });
       }
     }
   }
