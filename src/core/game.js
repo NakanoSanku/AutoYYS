@@ -63,10 +63,11 @@ game.findImg = function (params, isClick) {
       point.x + template.width,
       point.y + template.height,
     ];
+    
   if (typeof params.template == "string") {
     if (res)
       console.log(
-        "success find " + params.template.match(/\/([^/]+)\.\w+$/)[1]
+        "success find " + params.template.match(/\/([^/]+)\.\w+$/)[1] +" in "+ region
       );
     template.recycle();
   } //回收模板对象

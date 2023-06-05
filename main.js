@@ -1,5 +1,7 @@
 "ui";
 
+const { lanzouGetFolderNewFile } = require("./src/utils/lanzou");
+
 importClass(android.widget.SeekBar);
 importClass(android.os.Build);
 importClass(android.view.WindowManager);
@@ -159,10 +161,10 @@ ui.layout(
                       />
                     </horizontal>
                     <horizontal>
-                    <text text="Token:" textColor="blue" textStyle="bold"></text>
-                    <input id="pushplusToken" w="*">
+                      <text text="Token:" textColor="blue" textStyle="bold"></text>
+                      <input id="pushplusToken" w="*">
                       </input>
-                  </horizontal>
+                    </horizontal>
                     <text autoLink="web" text="pushplus官网: https://www.pushplus.plus/" textStyle="bold" ></text>
                   </vertical>
                   <View bg="{{color}}" h="*" w="10" />
@@ -183,11 +185,15 @@ ui.layout(
                       marginTop="14dp"
                       marginLeft="14dp"
                     />
-                      <text text="警告!!!这是高级设置,相关知识不了解,请勿尝试" textColor="red" textStyle="bold"></text>
-                      <horizontal>
-                        <text text="配置文件路径:" textColor="blue" textStyle="bold"></text>
-                        <input id="configPath" w="*"></input>
-                      </horizontal>
+                    <text text="警告!!!这是高级设置,相关知识不了解,请勿尝试" textColor="red" textStyle="bold"></text>
+                    <horizontal>
+                      <text text="配置文件路径:" textColor="blue" textStyle="bold"></text>
+                      <input id="configPath" w="*"></input>
+                    </horizontal>
+                    <horizontal>
+                      <text text="阴阳师应用名:" textColor="blue" textStyle="bold"></text>
+                      <input id="yysName" w="*" hint="阴阳师"></input>
+                    </horizontal>
                   </vertical>
                   <View bg="{{color}}" h="*" w="10" />
                 </card>
@@ -254,6 +260,7 @@ ui.layout(
     </vertical>
   </drawer>
 );
+var storage = storages.create("todoList");
 
 /**
  * 启动按钮
@@ -412,9 +419,7 @@ ui.menu.setDataSource([
   },
 ]);
 
-
-
-
+let downloadRunning = false;
 ui.menu.on("item_click", (item) => {
   switch (item.title) {
     case "退出脚本":
@@ -427,8 +432,101 @@ ui.menu.on("item_click", (item) => {
       //checkPermission();
       break;
     case "检查更新":
-      //   checkUpdate();
-      break;
+      var downloadDialog = null;
+      var downloadId = null;
+      var downloadProgress = null;
+      var releaseNotes = " v1.0.9\n"+"更新日志:\n"+"修复若干bug"
+      function download() {
+        downloadDialog = dialogs.build({
+          title: "发现新版本",
+          positive: "更新",
+          negative: "取消",
+          content: releaseNotes,
+          progress: {
+            max: 100,
+            showMinMax: true
+          },
+          autoDismiss: false
+        })
+          .on("positive", () => {
+            startDownload();
+          })
+          .on("negative", () => {
+            stopDownload();
+            downloadDialog.dismiss();
+            downloadDialog = null;
+          })
+          .show();
+      }
+
+      function startDownload() {
+        //监听确定键
+        if (!downloadRunning) {
+          downloadId = threads.start(function () {
+            const APIURL = "https://cloud.humorously.cn/api/lanzou.php"
+            const LANZOUURL = "https://wwxn.lanzoue.com/b00r4c8ah"
+            const PASSWORD = "9jw9"
+            toastLog("文件下载中,小心我榨干你哦");
+            importClass(java.io.FileOutputStream);
+            importClass(java.net.URL);
+            //初始化下载参数
+            let byteSum = 0; //总共读取的文件大小
+            let byteRead = 0; //每次读取的byte数
+            let buffer = util.java.array('byte', 1024); //byte[]
+            progress = 0
+            var d = dialogs.build({
+              title: "检查更新中...",
+              progress: {
+                max: -1
+              },
+              cancelable: false
+            }).show();
+            downloadDialog.dismiss();
+            let fileInfo = lanzouGetFolderNewFile(APIURL, LANZOUURL, PASSWORD);
+            d.dismiss();
+            downloadDialog.show();
+            if (typeof (fileInfo) !== "string") {
+              var myUrl = new URL(fileInfo[0]);
+              var conn = myUrl.openConnection(); //URLConnection
+              inStream = conn.getInputStream(); //InputStream
+              fs = new FileOutputStream(fileInfo[1]); //FileOutputStream
+              connLength = conn.getContentLength(); //int
+              while ((byteRead = inStream.read(buffer)) != -1) {
+                byteSum += byteRead;
+                fs.write(buffer, 0, byteRead); //读取
+                progress = ((byteSum / connLength) * 100).toFixed();
+              }
+            }
+            downloadDialog.dismiss();
+            downloadDialog = null;
+            if (fileInfo !== null) {
+              if (typeof (fileInfo) === "string") {
+                app.viewFile(fileInfo);
+              } else {
+                app.viewFile(fileInfo[1]);
+              }
+            }
+          })
+          downloadProgress = setInterval(() => {
+            if (progress >= 100) {
+              toastLog("下载完成")
+              clearInterval(downloadProgress);
+            }
+          }, 20);
+        } else {
+          toastLog("在下了,别急叼毛");
+        }
+      }
+
+      function stopDownload() {
+        if (downloadId !== null) {
+          downloadId.interrupt();
+        }
+        if (downloadProgress !== null) {
+          clearInterval(downloadProgress);
+        }
+      }
+      download();
   }
 });
 /**
@@ -444,7 +542,6 @@ var materialColors = [
   "#78a3eb",
 ];
 
-var storage = storages.create("todoList");
 //从storage获取todo列表
 var items = storage.get("items", [
   {
@@ -537,8 +634,9 @@ function initUiValue() {
   ui.队长模式.setChecked(storage.get("队长模式", false));
   ui.isWhile.setChecked(storage.get("isWhile", false));
   ui.isUsePushplus.setChecked(storage.get("isUsePushplus", false));
-  ui.pushplusToken.setText(storage.get("pushplusToken"))
-  ui.configPath.setText(storage.get("configPath"))
+  ui.pushplusToken.setText(storage.get("pushplusToken",""))
+  ui.configPath.setText(storage.get("configPath",""))
+  ui.yysName.setText(storage.get("yysName","阴阳师"))
   changeFabMenuState(false);
 }
 
@@ -553,6 +651,7 @@ function saveUiValue() {
   storage.put("isUsePushplus", ui.isUsePushplus.checked);//循环任务配置
   storage.put("pushplusToken", ui.pushplusToken.getText().toString());//循环任务配置
   storage.put("configPath", ui.configPath.getText().toString());//循环任务配置
+  storage.put("yysName", ui.yysName.getText().toString());//循环任务配置
 }
 function changeFabMenuState(state) {
   if (state) {

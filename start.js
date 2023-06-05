@@ -44,18 +44,21 @@ function functionalChoice(params) {
 }
 //监听say事件
 events.on("value", function (value) {
+  var storage = storages.create("todoList");
+  let yysName = (storage.get("yysName", "阴阳师") === "") ? "阴阳师" : storage.get("yysName", "阴阳师")
+  console.log(yysName);
   auto.waitFor();
-  while (app.getAppName(currentPackage()) != "阴阳师") {
-    launchApp("阴阳师");
+  while (app.getAppName(currentPackage()) != yysName) {
+    launchApp(yysName);
     sleep(1000);
   }
   getScreenCapture();
-  var storage = storages.create("todoList");
+
   var items = storage.get("items");
   var subthread = threads.start(
     function () {
       let j = 0;
-      let currentScreen = captureScreen();
+      var currentScreen = captureScreen();
       setInterval(function () {
         if (storage.get("isUsePushplus") && storage.get("pushplusToken") !== undefined) {
           if (images.getSimilarity(currentScreen, captureScreen()) > 0.9) {
