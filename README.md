@@ -9,10 +9,4 @@
 - [ ] 图像库更改命名或者解决中文路径无法读取图片问题
 
 # requirements
-- numpy
-- opencv-python
-- uiautomator2
-# 内置库
-- random
-- subprocess
-- time 
+- gameauto
