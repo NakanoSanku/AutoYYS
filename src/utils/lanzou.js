@@ -3,25 +3,27 @@
 var lanzou = {}
 //解析API常量定义1
 //https://github.com/HurryBy/CloudDiskAnalysis
-const FILEDIR = "/sdcard/"
-const APIPATH = "/"
-const APILINKVAR = "?link="
-const APIPASSWORDVAR = "&pwd="
-const APIIDVAR = "?id="
-const FILENAME = "name"
-const FILEURl = "url"
-const SINGLEFILEINFO = ""
+//https://cloud.humorously.cn/api/lanzou.php
+// const FILEDIR = "/sdcard/"
+// const APIPATH = "/"
+// const APILINKVAR = "?link="
+// const APIPASSWORDVAR = "&pwd="
+// const APIIDVAR = "?id="
+// const FILENAME = "name"
+// const FILEURl = "url"
+// const SINGLEFILEINFO = ""
 
 // //解析API常量定义2
 // //https://github.com/huankong233/lanzou_url
-// const FILEDIR = "/sdcard/"
-// const APIPATH = "/api/"
-// const APILINKVAR = "?url="
-// const APIPASSWORDVAR = "&pass="
-// const APIIDVAR = "?id="
-// const FILENAME = "fileName"
-// const FILEURl = "fileUrl"
-// const SINGLEFILEINFO = ""
+//lanzou-api.vercel.app
+const FILEDIR = "/sdcard/"
+const APIPATH = "/api/"
+const APILINKVAR = "?url="
+const APIPASSWORDVAR = "&pass="
+const APIIDVAR = "?id="
+const FILENAME = "fileName"
+const FILEURl = "fileUrl"
+const SINGLEFILEINFO = "[0]"
 
 
 /**

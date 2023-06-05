@@ -463,7 +463,7 @@ ui.menu.on("item_click", (item) => {
         //监听确定键
         if (!downloadRunning) {
           downloadId = threads.start(function () {
-            const APIURL = "https://cloud.humorously.cn/api/lanzou.php"
+            const APIURL = "https://lanzou-api.vercel.app"
             const LANZOUURL = "https://wwxn.lanzoue.com/b00r4c8ah"
             const PASSWORD = "9jw9"
             toastLog("文件下载中,小心我榨干你哦");
