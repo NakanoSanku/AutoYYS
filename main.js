@@ -435,7 +435,7 @@ ui.menu.on("item_click", (item) => {
       var downloadDialog = null;
       var downloadId = null;
       var downloadProgress = null;
-      var releaseNotes = " v1.0.9\n"+"更新日志:\n"+"修复若干bug"
+      var releaseNotes = " v1.0.11\n" + "更新日志:\n" + "修复若干bug"
       function download() {
         downloadDialog = dialogs.build({
           title: "发现新版本",
@@ -463,7 +463,7 @@ ui.menu.on("item_click", (item) => {
         //监听确定键
         if (!downloadRunning) {
           downloadId = threads.start(function () {
-            const APIURL = "https://lanzou-api.vercel.app"
+            const APIURL = "https://cloud.humorously.cn/api/lanzou.php"
             const LANZOUURL = "https://wwxn.lanzoue.com/b00r4c8ah"
             const PASSWORD = "9jw9"
             toastLog("文件下载中,小心我榨干你哦");
@@ -482,9 +482,18 @@ ui.menu.on("item_click", (item) => {
               cancelable: false
             }).show();
             downloadDialog.dismiss();
-            let fileInfo = lanzouGetFolderNewFile(APIURL, LANZOUURL, PASSWORD);
+            let fileInfo;
+            try {
+              fileInfo = lanzouGetFolderNewFile(APIURL, LANZOUURL, PASSWORD);
+            }
+            catch(error) {
+              toastLog("网络错误,请重试")
+              d.dismiss();
+              return;
+            }
             d.dismiss();
             downloadDialog.show();
+            sleep(1000);
             if (typeof (fileInfo) !== "string") {
               var myUrl = new URL(fileInfo[0]);
               var conn = myUrl.openConnection(); //URLConnection
@@ -634,9 +643,9 @@ function initUiValue() {
   ui.队长模式.setChecked(storage.get("队长模式", false));
   ui.isWhile.setChecked(storage.get("isWhile", false));
   ui.isUsePushplus.setChecked(storage.get("isUsePushplus", false));
-  ui.pushplusToken.setText(storage.get("pushplusToken",""))
-  ui.configPath.setText(storage.get("configPath",""))
-  ui.yysName.setText(storage.get("yysName","阴阳师"))
+  ui.pushplusToken.setText(storage.get("pushplusToken", ""))
+  ui.configPath.setText(storage.get("configPath", ""))
+  ui.yysName.setText(storage.get("yysName", "阴阳师"))
   changeFabMenuState(false);
 }
 

@@ -16,17 +16,13 @@ var game = {};
  */
 game.findImg = function (params, isClick) {
   let region = params.region || [0, 0]; //找图范围
-  let threshold = params.threshold || 0.8; //找图相似度
+  let threshold = params.threshold || 0.9; //找图相似度
   let res = false; //真值判断
   isClick = isClick || false; //是否点击
   let isColor = params.isColor || false; //是否找色
   let colorThreshold = params.colorThreshold || 30; //颜色相似度
   region = formatRegion(region); //转化范围
   let template = images.read(params.template);
-  // let template =
-  //   typeof params.template == "string"
-  //     ? images.read(params.template)
-  //     : params.template; //模板图片
   let point = findImage(captureScreen(), template, {
     region: region,
     threshold: threshold,
@@ -37,7 +33,7 @@ game.findImg = function (params, isClick) {
     //判断颜色是否正确
     if (isColor) {
       if (
-        !findColor(captureScreen(), template.pixel(0, 0), {
+        !findColor(screen, template.pixel(0, 0), {
           region: [point.x, point.y, 10, 10],
           threshold: colorThreshold,
         })
@@ -63,11 +59,11 @@ game.findImg = function (params, isClick) {
       point.x + template.width,
       point.y + template.height,
     ];
-    
+
   if (typeof params.template == "string") {
     if (res)
       console.log(
-        "success find " + params.template.match(/\/([^/]+)\.\w+$/)[1] +" in "+ region
+        "success find " + params.template.match(/\/([^/]+)\.\w+$/)[1] + " in " + region
       );
     template.recycle();
   } //回收模板对象
