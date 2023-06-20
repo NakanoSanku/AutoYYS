@@ -1,0 +1,67 @@
+{
+    "御魂_挑战": {
+        "template_path": "yys/images/御魂/御魂_挑战.bmp",
+        "use_match": false,
+        "threshold": 0.8,
+        "region": [
+            1140,
+            575,
+            1280,
+            720
+        ],
+        "is_color": true,
+        "color_threshold": 30,
+        "level": 3,
+        "scale": 1,
+        "match_method": "FLANNBASED"
+    },
+    "结算_视图": {
+        "template_path": "yys/images/结算/结算_视图.png",
+        "use_match": false,
+        "threshold": 0.8,
+        "region": [
+            0,
+            0,
+            180,
+            720
+        ],
+        "is_color": false,
+        "color_threshold": 4,
+        "level": 1,
+        "scale": 1,
+        "match_method": "FLANNBASED"
+    },
+    "结算_奖励": {
+        "template_path": "yys/images/结算/结算_奖励.png",
+        "use_match": false,
+        "threshold": 0.8,
+        "region": null,
+        "is_color": false,
+        "color_threshold": 4,
+        "level": 3,
+        "scale": 1,
+        "match_method": "FLANNBASED"
+    },
+    "结算_失败": {
+        "template_path": "yys/images/结算/结算_失败.png",
+        "use_match": false,
+        "threshold": 0.8,
+        "region": null,
+        "is_color": false,
+        "color_threshold": 4,
+        "level": 3,
+        "scale": 1,
+        "match_method": "FLANNBASED"
+    },
+    "结算_胜利": {
+        "template_path": "yys/images/结算/结算_胜利.bmp",
+        "use_match": false,
+        "threshold": 0.8,
+        "region": null,
+        "is_color": false,
+        "color_threshold": 4,
+        "level": 3,
+        "scale": 1,
+        "match_method": "FLANNBASED"
+    }
+}
