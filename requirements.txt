@@ -1,6 +1,3 @@
-<<<<<<< HEAD
-gameauto
-=======
 minidevice
 pywebio
->>>>>>> e75d157 (init)
+

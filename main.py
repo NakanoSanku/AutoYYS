@@ -1,11 +1,3 @@
-<<<<<<< HEAD
-from yys import YYS
-game= YYS("127.0.0.1:16384")
-#演示
-game.explore(10,0.5)
-if game.method == "MiniDevice":
-    game.stop()
-=======
 # from yys.tasks import FEATURE
 # from yys.core import YYS
 
@@ -223,4 +215,3 @@ main["index"] = page
 
 if __name__ == "__main__":
     start_server(main, debug=True, port=8080)
->>>>>>> e75d157 (init)
