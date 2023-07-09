@@ -214,8 +214,7 @@ ui.layout(
           h="auto"
           src="@drawable/ic_play_arrow_black_48dp"
           margin="16"
-          marginBottom="166"
-          layout_gravity="bottom|right"
+          layout_gravity="bottom|center"
           tint="#ffffff"
         />
         <fab
@@ -224,8 +223,7 @@ ui.layout(
           h="auto"
           src="@drawable/ic_add_black_48dp"
           margin="16"
-          marginBottom="90"
-          layout_gravity="bottom|right"
+          layout_gravity="bottom|left"
           tint="#ffffff"
         />
         <fab

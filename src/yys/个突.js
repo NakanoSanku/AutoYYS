@@ -63,6 +63,10 @@ module.exports = function (params) {
       isColor: true,
       threshold: 0.6,
     },
+    settlementArray :[
+      [10, 120, 250, 550],
+      [1100, 50, 1280, 720],
+    ]
   };
   let beat = {};
   let close = {

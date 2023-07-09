@@ -8,7 +8,8 @@ module.exports = function (params) {
   let settlementArray = storage.get("personalConfig");
   if (!storage.get("是否开启自定义结算")) settlementArray = undefined;
   if (params.done) {
-    console.info("开始" + params.title);
+    console.log(params);
+    console.log("开始" + params.title);
     switch (params.title) {
       case "御魂":
         fight({
@@ -49,6 +50,6 @@ module.exports = function (params) {
       default:
         break;
     }
-    -sleep(1000);
+    sleep(1000);
   }
 };

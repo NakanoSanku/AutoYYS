@@ -11,6 +11,7 @@ events.on("value", function (value) {
     myRequestScreenCapture();
     var storage = storages.create("todoList");
     var items = storage.get("items");
+    console.log(items)
     do {
         for (let index = 0; index < items.length; index++) {
             functionalChoice(items[index]);
