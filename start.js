@@ -57,40 +57,8 @@ events.on("value", function (value) {
   var subthread = threads.start(
     function () {
       sleep(15000);
-
-
       setInterval(function () { 协作(); }, 5000);//协作检测定时器
-      // const w = device.width > device.height ? device.width : device.height;
-      // const h = device.width > device.height ? device.height : device.width;
-      // let img = images.clip(captureScreen(), w / 4, h / 4, w / 4, h / 4);
-      // images.save(img, "/sdcard/currentScreen.jpg", "jpg", 50);
-      // img.recycle();
-      // let bugTimes = 0;
-      // setInterval(() => {
-      //   let currentScreen = images.read("/sdcard/currentScreen.jpg");
-      //   let img = images.clip(captureScreen(), w / 4, h / 4, w / 4, h / 4);
-      //   if (images.getSimilarity(currentScreen, img) >= 0.9) {
-      //     console.log("比对成功" + ++bugTimes + "次!");
-      //     if (bugTimes === 3) {
-      //       if (storage.get("isUsePushplus") && storage.get("pushplusToken") !== undefined) {
-      //         let url = "http://www.pushplus.plus/send";
-      //         let r = http.postJson(url, {
-      //           token: storage.get("pushplusToken"),
-      //           title: "阴阳师脚本可能卡住啦",
-      //           content: "bug",
-      //         });
-      //         console.warn(r.body.string());
-      //       }
-      //     }
-      //     // engines.myEngine().forceStop();
-      //   } else {
-      //     //更新次数
-      //     console.log("比对失败")
-      //     images.save(img, "/sdcard/currentScreen.jpg", "jpg", 50);
-      //   }
-      //   currentScreen.recycle();
-      //   img.recycle();
-      // }, 6000);//卡住检测定时器
+
     })
   subthread.waitFor();
   do {
