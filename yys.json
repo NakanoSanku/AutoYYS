@@ -18,7 +18,7 @@
       [
         10,
         120,
-        250,
+        120,
         550
       ],
       [
@@ -126,7 +126,7 @@
   },
   "close": {
     "template": "./img/公用/退出.bmp",
-    "threshold": 0.6
+    "threshold": 0.8
   },
   "chapter": {
     "template": "./img/探索/二十八章.png",
