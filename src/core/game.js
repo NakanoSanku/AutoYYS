@@ -1,6 +1,6 @@
 const { randomClick } = require("./actions");
 const { formatRegion } = require("./utils");
-
+var captureScreenLock = threads.lock()
 var game = {};
 /**
  * 找图函数
@@ -23,7 +23,13 @@ game.findImg = function (params, isClick) {
   let colorThreshold = params.colorThreshold || 30; //颜色相似度
   region = formatRegion(region); //转化范围
   let template = images.read(params.template);
-  let point = findImage(captureScreen(), template, {
+  // 截图锁
+  let screen;
+  captureScreenLock.lock();
+  screen = captureScreen().clone();
+  captureScreenLock.unlock();
+
+  let point = findImage(screen, template, {
     region: region,
     threshold: threshold,
   });
@@ -67,6 +73,7 @@ game.findImg = function (params, isClick) {
       );
     template.recycle();
   } //回收模板对象
+  screen.recycle();
   return res ? region : null;
 };
 /**
