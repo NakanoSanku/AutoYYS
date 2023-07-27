@@ -110,7 +110,7 @@ module.exports = function (times, speed, delayTime) {
     if (findImg(json.chapter)) {
       j++;
     } else {
-      findImg(json.exit, true);
+      if (findImg(json.formula)) findImg(json.exit, true);
     }
     if (j > 5) {
       files.write(filePath, JSON.stringify(json), "utf-8");
