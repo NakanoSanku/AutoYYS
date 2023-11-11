@@ -27,9 +27,11 @@ utils.generateRandomPoint = function (region) {
   let w = xmax - xmin;
   let h = ymax - ymin;
   let x, y;
+  let centerX = xmin + w / 2
+  let centerY = ymin + h / 2
   do {
-    x = Math.round(utils.generateGaussian(xmin + w / 2, w / 6));
-    y = Math.round(utils.generateGaussian(ymin + h / 2, h / 6));
+    x = Math.round(utils.generateGaussian(centerX, w / 6));
+    y = Math.round(utils.generateGaussian(centerY, h / 6));
   } while (x < xmin || x > xmax || y < ymin || y > ymax);
   return { x: x, y: y };
 };
@@ -91,13 +93,7 @@ utils.enlargeRegion = function (region, w, h) {
  * @returns
  */
 utils.getScreenCapture = function () {
-  var res = false;
-  if (device.height > device.width) {
-    toastLog("手机模式");
-    res = true;
-  } else {
-    toastLog("平板模式");
-  }
+  var res = device.height > device.width ? true : false;
   let Thread = threads.start(function () {
     if (auto.service != null) {
       //如果已经获得无障碍权限

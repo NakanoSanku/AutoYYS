@@ -3,14 +3,6 @@ const { findImg } = require("../core/game");
 const { generateRandomPoint, enlargeRegion } = require("../core/utils");
 const settle = require("./settle");
 
-/**
- * 探索模块
- * @param {{
- * times:次数
- * settlementArray:自定义结算
- * speed:是否启用光速模式
- * screenshotLoad:截图根路径}} params
- */
 module.exports = function (times, speed, delayTime) {
   const filePath = "./yys.json";
   if (storages.create("todoList").get("configPath") && storages.create("todoList").get("configPath") !== "") {

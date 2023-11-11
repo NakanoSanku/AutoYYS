@@ -1,5 +1,8 @@
 const { randomClick } = require("./actions");
 const { formatRegion } = require("./utils");
+
+
+let ocr = null;
 var captureScreenLock = threads.lock()
 var game = {};
 /**
@@ -8,10 +11,10 @@ var game = {};
  * template:模板图片或者地址
  * region:找图范围
  * threshold:找图相似度
- * isClick:是否点击
  * isColor:是否找色
  * colorThreshold:颜色相似度
  * }} params
+ * @param {boolean} isClick
  * @returns
  */
 game.findImg = function (params, isClick) {
@@ -77,36 +80,32 @@ game.findImg = function (params, isClick) {
   return res ? region : null;
 };
 /**
- * 
- * @param {paddleOcr} paddle paddle ocr创建的对象
- * @param {str} content 查找文本
- * @param {boolean} isClick 是否点击 默认为false
- * @param {boolean} isDimFind 是否模糊查找 查找识别到的整段文本是否存在需匹配的文本 默认为true
- * @returns 
+ * 初始化MLKitOCR
+ * @returns MLkitOCR对象
  */
-game.paddleOcr = function (paddle, content, isClick, isDimFind) {
-  if (isDimFind === undefined) isDimFind = true
-  if (isClick === undefined) isClick = false
-  let ocrResult = null;
-  let result = false;
-  let res = paddle.detect(captureScreen());
-  if (res && res.length > 0) {
-    for (let i = 0; i < res.length; i++) {
-      ocrResult = res[i];
-      if (isDimFind && ocrResult.text.indexOf(content) != -1) {
-        result = true;
-      } else if (content === ocrResult.text) {
-        result = true;
-      } else {
-        ocrResult = null;
-      }
-      if (result && isClick) {
-        randomClick({
-          region: [ocrResult.bounds.left, ocrResult.bounds.top, ocrResult.bounds.right, ocrResult.bounds.bottom]
-        });
-      }
-    }
+function initOcr() {
+  // 加载OCR插件，需要先在Auto.js Pro的插件商店中下载官方MLKitOCR插件
+  let MLKitOCR = $plugins.load('org.autojs.autojspro.plugin.mlkit.ocr');
+  return new MLKitOCR();
+}
+game.ocrFind = function (text, region, threshold, isClick) {
+  x, y, w, h = region;
+  region = [x, y, x + w, y + h] || [0, 0];
+  threshold = threshold || 0.8;
+  ocr = ocr || initOcr();
+  // 截图锁
+  let screen;
+  captureScreenLock.lock();
+  screen = captureScreen().clone();
+  captureScreenLock.unlock();
+  let result = ocr.detect(capture, { region:region });
+  // 过滤可信度threshold以上的文本
+  let filtered = result.filter(item => item.confidence > threshold);
+  // 模糊搜索文字内容为"Auto.js"的文本结果
+  let autojs = filtered.find(item => item.text.includes(text));
+  // 若搜索到则打印其可信度、范围和中点位置并点击
+  if (autojs || isClick) {
+    // autojs.bounds.
   }
-  return ocrResult
-};
+}
 module.exports = game;

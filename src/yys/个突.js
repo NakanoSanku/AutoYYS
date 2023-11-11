@@ -82,7 +82,7 @@ module.exports = function () {
     }
     if (numberOfVictory == 8 && numberOfFailures < 4) {
       p = findImg(json.tupo_exit, true);
-      if (p){
+      if (p) {
         json.tupo_exit.region = json.tupo_exit.region || enlargeRegion(p, w, h);
         sleep(500)
       }
@@ -111,7 +111,7 @@ module.exports = function () {
     if (p) {
       json.settleWin.imgConfig.region =
         json.settleWin.imgConfig.region || enlargeRegion(p, w, h);
-      numberOfVictory++;
+      console.log(`胜利次数:${++numberOfVictory}`);
     }
     p = settle(json.settleReward);
     if (p) {
@@ -122,7 +122,7 @@ module.exports = function () {
     if (p) {
       json.settleFail.imgConfig.region =
         json.settleFail.imgConfig.region || enlargeRegion(p, w, h);
-      numberOfFailures++;
+      console.log(`失败次数:${++numberOfFailures}`);
     }
     sleep(500);
   }

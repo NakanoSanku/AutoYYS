@@ -1,0 +1,72 @@
+{
+    "召唤": {
+        "template": "./img/契灵/召唤.png",
+        "region": [
+            1135,
+            446,
+            1245,
+            553
+        ],
+        "threshold": 0.8
+    },
+    "镇墓兽": {
+        "template": "./img/契灵/镇墓兽.png",
+        "region": [
+            828,
+            108,
+            1146,
+            555
+        ],
+        "threshold": 0.7
+    },
+    "确认": {
+        "template": "./img/契灵/确认.png",
+        "region": [1120,562,1251,703],
+        "threshold": 0.7
+    },
+    "火": {
+        "template": "./img/契灵/火.png",
+        "threshold": 0.7
+    },
+    "捕获成功": {
+        "template": "./img/契灵/捕获成功.png",
+        "region0":[829,50,1241,494],
+        "threshold": 0.7
+    },
+    "挑战": {
+        "template": "./img/契灵/挑战.png",
+        "region": [
+            1101,
+            522,
+            1279,
+            717
+        ],
+        "threshold": 0.8
+    },
+    "结算": {
+        "imgConfig": {
+            "template": "./img/斗技/斗技_奖励.png",
+            "region": [
+                450,
+                400,
+                800,
+                650
+            ]
+        },
+        "settlementArray": [
+            [
+                10,
+                120,
+                120,
+                550
+            ],
+            [
+                1100,
+                50,
+                1280,
+                720
+            ]
+        ],
+        "method": 1
+    }
+}

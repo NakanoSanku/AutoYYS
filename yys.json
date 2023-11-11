@@ -102,9 +102,28 @@
   "业原火": {
     "template": "./img/业原火/业原火.bmp"
   },
+  "活动": {
+    "template": "./img/活动/活动.bmp",
+    "region":[1000,500,1280,720],
+    "threshold":0.7
+  },
   "settleView": {
     "imgConfig": {
-      "template": "./img/公用/结算.bmp"
+      "template": "./img/公用/结算.bmp",
+      "settlementArray": [
+        [
+          10,
+          100,
+          120,
+          550
+        ],
+        [
+          1150,
+          50,
+          1280,
+          720
+        ]
+      ]
     }
   },
   "settleReward": {
@@ -115,13 +134,20 @@
   "settleWin": {
     "imgConfig": {
       "template": "./img/公用/结算一.bmp",
-      "isColor": true
+      "isColor": true,
+      "threshold":0.9
     }
   },
   "settleFail": {
     "imgConfig": {
       "template": "./img/公用/失败结算.bmp",
-      "isColor": true
+      "isColor": true,
+      "threshold":0.8
+    }
+  },
+  "settleWin2": {
+    "imgConfig": {
+      "template": "./img/活动/活动结算.bmp"
     }
   },
   "close": {

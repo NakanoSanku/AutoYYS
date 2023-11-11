@@ -316,8 +316,6 @@ if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
  */
 //创建选项菜单(右上角)
 ui.emitter.on("create_options_menu", (menu) => {
-  menu.add("清空日志");
-  menu.add("保存日志");
   menu.add("使用说明");
   menu.add("关于");
 });
@@ -329,14 +327,6 @@ ui.emitter.on("options_item_selected", (e, item) => {
       break;
     case "关于":
       alert("关于", "insider v1.0.0");
-    case "清空日志":
-      console.clear();
-      ui.globalconsole.clear();
-      break;
-    case "保存日志":
-      console.setGlobalLogConfig({ file: "/sdcard/log.txt" });
-      app.viewFile("/sdcard/log.txt");
-      break;
   }
   e.consumed = true;
 });
@@ -346,7 +336,7 @@ activity.setSupportActionBar(ui.toolbar);
  * 滑动页面
  */
 //设置滑动页面的标题
-ui.viewpager.setTitles(["任务方案", "日常功能", "全局日志"]);
+ui.viewpager.setTitles(["任务方案", "日常功能","全局日志"]);
 var fabMenuIsShow = true;
 ui.viewpager.setOnTouchListener({
   onTouch: function (view, event) {
@@ -603,10 +593,11 @@ var yyslist = [
   "御灵",
   "探索",
   "个人突破",
-  // "寮突",
-  //"活动",
+  "寮突",
+  "活动",
   //"自动奉纳",
-  "测试",
+  "斗技",
+  "契灵"
 ];
 ui.add.on("click", () => {
   fabMenuState = !fabMenuState;

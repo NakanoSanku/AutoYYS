@@ -1,9 +1,12 @@
 {
+  "abis": [
+    "armeabi-v7a"
+  ],
   "assets": [],
   "build": {
-    "build_id": "25C5601A-4",
-    "build_number": 4,
-    "build_time": 1677151102343,
+    "build_id": "BA0BE7D2-2",
+    "build_number": 2,
+    "build_time": 1695396954601,
     "release": false
   },
   "encryptLevel": 0,
@@ -11,21 +14,21 @@
     "activityIntentTasks": false,
     "nodejs": "disabled"
   },
+  "icon": "images/ic_app_logo.png",
   "launchConfig": {
-    "displaySplash": true,
+    "displaySplash": false,
     "hideLogs": false,
-    "splashText": "Powered by Insider",
     "stableMode": false
   },
   "main": "main.js",
-  "name": "Insider for yys",
+  "name": "insider",
   "optimization": {
     "obfuscateComponents": false,
     "removeAccessibilityService": false,
     "removeOpenCv": false,
     "unusedResources": false
   },
-  "packageName": "org.test.insider",
+  "packageName": "com.insider.yys",
   "permissionConfig": {
     "requestListOnStartup": [
       "android.permission.WRITE_EXTERNAL_STORAGE"
@@ -33,6 +36,6 @@
   },
   "scripts": {},
   "useFeatures": [],
-  "versionCode": 7,
-  "versionName": "1.0.6"
+  "versionCode": 3,
+  "versionName": "1.1.1"
 }

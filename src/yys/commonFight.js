@@ -2,23 +2,7 @@ const { findImg } = require("../core/game");
 const { enlargeRegion } = require("../core/utils");
 const settle = require("./settle");
 
-/**
- *
- * @param {str} mode
- * @param {int} times
- * @param {{
- * delayTime:int,
- * isSpeed:boolean,
- * leader:boolean
- * }} params
- * - mode 模式选择 "御魂" "御灵" "业原火"
- * - times 次数
- * - params 可选参数
- *   - delayTime:延迟 默认800ms
- *   - isSpeed:是否启用延迟 默认true
- *
- *   - leader:是否为御魂队长 默认false
- */
+
 module.exports = function (mode, times, params) {
   let filePath = "./yys.json";
   if (storages.create("todoList").get("configPath") && storages.create("todoList").get("configPath") !== "") {
@@ -45,7 +29,6 @@ module.exports = function (mode, times, params) {
     if (mode === "御魂" || mode === "业原火") {
       let p = settle(json.settleView);
       if (p) {
-        i++;
         console.info(`${++i}次结算完成`);
       }
     } else if (mode === "御灵") {
@@ -58,6 +41,13 @@ module.exports = function (mode, times, params) {
         console.info(`${++i}次结算完成`);
         json.settleReward.imgConfig.region =
           json.settleReward.imgConfig.region || enlargeRegion(p, w, h);
+      }
+    }
+    if (mode === "活动") {
+      let p = settle(json.settleWin2)
+      if (p) {
+        console.info(`${++i}次结算完成`);
+        json.settleWin2.imgConfig.region = json.settleWin2.imgConfig.region || enlargeRegion(p, w, h);
       }
     }
     if (isSpeed) sleep(delayTime);
