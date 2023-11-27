@@ -636,7 +636,8 @@ var yyslist = [
   // "活动",
   //"自动奉纳",
   "斗技",
-  "契灵"
+  "契灵",
+  "抽厕纸"
 ];
 ui.add.on("click", () => {
   fabMenuState = !fabMenuState;

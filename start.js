@@ -7,6 +7,7 @@ const 契灵 = require("./src/yys/契灵");
 const 寮突 = require("./src/yys/寮突");
 const 斗技 = require("./src/yys/斗技");
 const 组队战斗 = require("./src/yys/组队战斗");
+const 抽厕纸 = require("./src/tasks/抽厕纸");
 
 function functionalChoice(params) {
   var storage = storages.create("todoList");
@@ -45,6 +46,8 @@ function functionalChoice(params) {
         契灵(params.summary, {
           delayTime: delayTime
         })
+      case "抽厕纸":
+        抽厕纸(params.summary,delayTime);
     }
     
     sleep(1000);
