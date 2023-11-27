@@ -19,6 +19,18 @@
         ],
         "threshold": 0.7
     },
+    "茨球": {
+        "template": "./img/契灵/茨球.png",
+        "threshold": 0.7
+    },
+    "火灵": {
+        "template": "./img/契灵/火灵.png",
+        "threshold": 0.7
+    },
+    "小黑": {
+        "template": "./img/契灵/小黑.png",
+        "threshold": 0.7
+    },
     "确认": {
         "template": "./img/契灵/确认.png",
         "region": [1120,562,1251,703],
@@ -42,31 +54,5 @@
             717
         ],
         "threshold": 0.8
-    },
-    "结算": {
-        "imgConfig": {
-            "template": "./img/斗技/斗技_奖励.png",
-            "region": [
-                450,
-                400,
-                800,
-                650
-            ]
-        },
-        "settlementArray": [
-            [
-                10,
-                120,
-                120,
-                550
-            ],
-            [
-                1100,
-                50,
-                1280,
-                720
-            ]
-        ],
-        "method": 1
     }
 }

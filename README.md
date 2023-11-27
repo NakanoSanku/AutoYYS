@@ -60,3 +60,7 @@
 ## 进阶配置(不推荐)
 可自行更换[img](img/)文件夹目录来实现其他分辨率使用脚本，对应图片更换即可，并将[yys.json](yys.json)更改为默认的
 yys.json可将settleWin/settleView/settleReward的method更换为1并且修改settlementArray数组来实现自定义结算
+
+
+## Actions
+### 单人挑战

@@ -1,0 +1,13 @@
+{
+    "组队挑战": {
+        "template": "./images/组队挑战.png",
+        "region": [
+            1000,
+            500,
+            1280,
+            720
+        ],
+        "threshold": 0.8,
+        "isColor": true
+    }
+}

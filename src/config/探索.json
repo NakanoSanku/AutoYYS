@@ -1,0 +1,28 @@
+{
+  "章节选择": {
+    "template": "./img/探索/二十八章.png",
+    "threshold": 0.9
+  },
+  "宝箱": {
+    "template": "./img/探索/宝箱.bmp"
+  },
+  "探索按钮": {
+    "template": "./img/探索/探索按钮.bmp"
+  },
+  "式神录": {
+    "template": "./img/公用/式神录.bmp"
+  },
+  "探索_退出": {
+    "template": "./img/公用/退出1.png"
+  },
+  "探索_退出确认": {
+    "template": "./img/探索/确认.bmp"
+  },
+  "小怪": {
+    "template": "./img/探索/小怪.bmp",
+    "threshold":0.7
+  },
+  "大怪": {
+    "template": "./img/探索/大怪.bmp"
+  }
+}

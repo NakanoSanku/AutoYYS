@@ -59,6 +59,7 @@ game.findImg = function (params, isClick) {
           point.y + template.height,
         ],
       });
+      sleep(1000);
     }
   }
   if (res)

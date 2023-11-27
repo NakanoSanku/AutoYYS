@@ -1,0 +1,19 @@
+{
+  "个人突破": {
+    "template": "./img/突破/个人突破/个人突破.bmp",
+    "threshold": 0.9,
+    "isColor": true
+  },
+  "寮突": {
+    "template": "./img/突破/寮突/寮突.bmp",
+    "region": [
+      1175,
+      339,
+      1277,
+      491
+    ]
+  },
+  "结界突破": {
+    "template": "./img/突破/结界突破.png"
+  }
+}

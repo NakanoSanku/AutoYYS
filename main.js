@@ -96,7 +96,7 @@ ui.layout(
                     <text
                       textSize="20sp"
                       marginBottom="14dp"
-                      text="御魂配置"
+                      text="组队配置"
                       marginTop="14dp"
                       marginLeft="14dp"
                     />
@@ -105,6 +105,32 @@ ui.layout(
                         id="队长模式"
                         marginRight="6dp"
                         text="队长模式"
+                      />
+                    </horizontal>
+                  </vertical>
+                  <View bg="{{color}}" h="*" w="10" />
+                </card>
+                <card
+                  w="*"
+                  h="auto"
+                  margin="10 5"
+                  cardCornerRadius="5dp"
+                  cardElevation="1dp"
+                  gravity="center_vertical"
+                >
+                  <vertical padding="18 8" h="auto" marginBottom="12dp">
+                    <text
+                      textSize="20sp"
+                      marginBottom="14dp"
+                      text="个人突破配置"
+                      marginTop="14dp"
+                      marginLeft="14dp"
+                    />
+                    <horizontal>
+                      <checkbox
+                        id="是否保级"
+                        marginRight="6dp"
+                        text="是否保级"
                       />
                     </horizontal>
                   </vertical>
@@ -132,6 +158,8 @@ ui.layout(
                         marginRight="6dp"
                         text="是否循环任务"
                       />
+                      <text text="每轮循环间隔时间(单位ms):" textColor="blue" textStyle="bold"></text>
+                      <input id="sleepTime" w="*" inputType="number" ></input>
                     </horizontal>
                   </vertical>
                   <View bg="{{color}}" h="*" w="10" />
@@ -187,13 +215,17 @@ ui.layout(
                     />
                     <text text="警告!!!这是高级设置,相关知识不了解,请勿尝试" textColor="red" textStyle="bold"></text>
                     <horizontal>
-                      <text text="配置文件路径:" textColor="blue" textStyle="bold"></text>
-                      <input id="configPath" w="*"></input>
-                    </horizontal>
-                    <horizontal>
                       <text text="阴阳师应用名:" textColor="blue" textStyle="bold"></text>
                       <input id="yysName" w="*" hint="阴阳师"></input>
                     </horizontal>
+                    <horizontal>
+                    <text text="找图延迟时间(单位ms):" textColor="blue" textStyle="bold"></text>
+                      <input id="delayTime" w="*" inputType="number" ></input>
+                    </horizontal>
+                    {/* <horizontal>
+                    <text text="定时任务:" textColor="blue" textStyle="bold"></text>
+                      <input id="dateTime" w="*" inputType="datetime" ></input>
+                    </horizontal> */}
                   </vertical>
                   <View bg="{{color}}" h="*" w="10" />
                 </card>
@@ -336,7 +368,7 @@ activity.setSupportActionBar(ui.toolbar);
  * 滑动页面
  */
 //设置滑动页面的标题
-ui.viewpager.setTitles(["任务方案", "日常功能","全局日志"]);
+ui.viewpager.setTitles(["任务方案", "日常功能", "全局日志"]);
 var fabMenuIsShow = true;
 ui.viewpager.setOnTouchListener({
   onTouch: function (view, event) {
@@ -476,7 +508,7 @@ ui.menu.on("item_click", (item) => {
             try {
               fileInfo = lanzouGetFolderNewFile(APIURL, LANZOUURL, PASSWORD);
             }
-            catch(error) {
+            catch (error) {
               toastLog("网络错误,请重试")
               d.dismiss();
               return;
@@ -588,13 +620,20 @@ ui.list.on("item_bind", function (itemView, itemHolder) {
 });
 
 var yyslist = [
-  "御魂",
+  "组队永生之海",
+  "组队日轮之陨",
+  "组队御魂",
+  "组队觉醒",
+  "单人永生之海",
+  "单人日轮之陨",
+  "单人御魂",
+  "单人觉醒",
   "业原火",
   "御灵",
   "探索",
   "个人突破",
   "寮突",
-  "活动",
+  // "活动",
   //"自动奉纳",
   "斗技",
   "契灵"
@@ -632,11 +671,13 @@ ui.fabMenu.on("click", () => {
 function initUiValue() {
   //御魂
   ui.队长模式.setChecked(storage.get("队长模式", false));
+  ui.是否保级.setChecked(storage.get("是否保级", false));
   ui.isWhile.setChecked(storage.get("isWhile", false));
   ui.isUsePushplus.setChecked(storage.get("isUsePushplus", false));
   ui.pushplusToken.setText(storage.get("pushplusToken", ""))
-  ui.configPath.setText(storage.get("configPath", ""))
   ui.yysName.setText(storage.get("yysName", "阴阳师"))
+  ui.sleepTime.setText(storage.get("sleepTime", "0"))
+  ui.delayTime.setText(storage.get("delayTime", "0"))
   changeFabMenuState(false);
 }
 
@@ -647,11 +688,14 @@ function initUiValue() {
 function saveUiValue() {
   storage.put("items", items);
   storage.put("队长模式", ui.队长模式.checked);//御魂队长模式配置
+  storage.put("是否保级", ui.是否保级.checked);
   storage.put("isWhile", ui.isWhile.checked);//循环任务配置
   storage.put("isUsePushplus", ui.isUsePushplus.checked);//循环任务配置
   storage.put("pushplusToken", ui.pushplusToken.getText().toString());//循环任务配置
-  storage.put("configPath", ui.configPath.getText().toString());//循环任务配置
   storage.put("yysName", ui.yysName.getText().toString());//循环任务配置
+  storage.put("sleepTime",ui.sleepTime.getText().toString());//每次循环任务间隔时间
+  storage.put("delayTime",ui.delayTime.getText().toString());//每次循环任务间隔时间
+  // console.log(ui.dateTime.getText());
 }
 function changeFabMenuState(state) {
   if (state) {

@@ -1,54 +1,41 @@
 const { randomClick } = require("../core/actions");
 const { findImg } = require("../core/game");
-const { enlargeRegion } = require("../core/utils");
-const settle = require("./settle");
+const 准备 = require("../tasks/准备");
+const 结算 = require("../tasks/结算");
+const 进入突破界面 = require("../tasks/进入突破界面");
+const 退出突破界面 = require("../tasks/退出粉色叉界面");
 
 
+const filePath = "./src/config/个人突破.json";
+let config = JSON.parse(files.read(filePath));
+const Breach = config.个人突破矩阵;
 
-module.exports = function () {
-  const w = device.width > device.height ? device.width : device.height;
-  const h = device.width > device.height ? device.height : device.width;
-  const filePath = "./yys.json";
-  if (storages.create("todoList").get("configPath") && storages.create("todoList").get("configPath") !== "") {
-    filePath = storages.create("todoList").get("configPath")
-  }
-  let json = JSON.parse(files.read(filePath));
-  const Breach = json.breach;
+/**
+ * 个人突破
+ * @param {boolean} isEnsureLevel 是否保级
+ */
+module.exports = function (isEnsureLevel) {
   let numberOfFailures = 0;
   let numberOfVictory = 0;
   let index = 0;
   let res = true;
-  let p = null;
+  let isEnsureLevel = isEnsureLevel || true;
+  //进入突破界面
+  进入突破界面('个突');
   while (true) {
-    p = findImg(json.presonBreakthrough, true);
-    if (p) {
-      json.presonBreakthrough.region =
-        json.presonBreakthrough.region || enlargeRegion(p, w, h);
-      sleep(500);
-      break;
+    //重置胜利和失败次数
+    if (numberOfVictory === 9) {
+      numberOfVictory = 0;
+      numberOfFailures = 0;
+      console.info("重置胜利和失败次数");
     }
-    p = findImg(json.breakthrough, true);
-    if (p) {
-      json.breakthrough.region =
-        json.breakthrough.region || enlargeRegion(p, w, h);
-    }
-    sleep(500);
-  }
-  console.info("突破界面");
-  while (true) {
+    //刷新逻辑
     if ((numberOfVictory < 3 && numberOfFailures > 0) || numberOfFailures > 4) {
       while (true) {
-        p = findImg(json.refresh, true);
-        if (p) {
-          json.refresh.region = json.refresh.region || enlargeRegion(p, w, h);
-          console.info("刷新");
-        }
-        p = findImg(json.confirmRefresh, true);
-        if (p) {
-          json.confirmRefresh.region =
-            json.confirmRefresh.region || enlargeRegion(p, w, h);
+        if (findImg(config.刷新, true)) console.info("刷新");
+        if (findImg(config.刷新确认, true)) {
           sleep(2000);
-          if (!findImg(json.confirmRefresh)) {
+          if (!findImg(config.刷新确认)) {
             sleep(1000);
             break;
           }
@@ -56,86 +43,48 @@ module.exports = function () {
       }
       numberOfVictory = 0;
       numberOfFailures = 0;
-      console.info("重置");
+      console.info("重置胜利和失败次数");
     }
-    p = findImg(json.tupo_formula);
-    if (p) {
-      json.tupo_formula.region =
-        json.tupo_formula.region || enlargeRegion(p, w, h);
+    //选择攻击对象
+    if (findImg(config.式神录)) {
+      sleep(1000);
       if (res) {
         for (index = 0; index < Breach.length; index++) {
-          json.beat.region = Breach[index];
-          if (findImg(json.beat)) numberOfVictory++;
+          config.个突_已突破.region = Breach[index];
+          if (findImg(config.个突_已突破)) numberOfVictory++;
         }
         //自动初始化已突破数量
         console.info("当前已突破个数" + numberOfVictory);
         res = false;
       }
       for (index = 0; index < Breach.length; index++) {
-        json.beat.region = Breach[index];
-        if (!findImg(json.beat)) {
+        config.个突_已突破.region = Breach[index];
+        if (!findImg(config.个突_已突破)) {
           randomClick({ region: Breach[index] });
           sleep(500);
           break;
         }
       }
     }
-    if (numberOfVictory == 8 && numberOfFailures < 4) {
-      p = findImg(json.tupo_exit, true);
-      if (p) {
-        json.tupo_exit.region = json.tupo_exit.region || enlargeRegion(p, w, h);
-        sleep(500)
-      }
-      p = findImg(json.exitConfirm, true);
-      if (p) {
-        json.exitConfirm.region =
-          json.exitConfirm.region || enlargeRegion(p, w, h);
-        sleep(2000);
-      }
-    }
-    if (numberOfVictory == 9) {
-      numberOfVictory = 0;
-      numberOfFailures = 0;
-      console.info("重置");
-    }
-    p = findImg(json.attack, true);
-    if (p) {
+    //进攻
+    if (findImg(config.个突_进攻, true)) {
       sleep(3000);
-      if (findImg(json.attack)) break;
+      if (findImg(config.个突_进攻)) break;
     }
-    if (!(numberOfVictory == 8 && numberOfFailures < 4)) {
-      p = findImg(json.ready, true);
-      if (p) json.ready.region = json.ready.region || enlargeRegion(p, w, h);
+    //准备逻辑
+    if (!isEnsureLevel || !(numberOfVictory === 8 && numberOfFailures < 4)) 准备();
+    //保级退出逻辑
+    if ((numberOfVictory == 8 && numberOfFailures < 4) && isEnsureLevel) {
+      if (findImg(config.个突_退出, true)) sleep(500);
+      if (findImg(config.个突_退出确认, true)) sleep(2000);
     }
-    p = settle(json.settleWin);
-    if (p) {
-      json.settleWin.imgConfig.region =
-        json.settleWin.imgConfig.region || enlargeRegion(p, w, h);
-      console.log(`胜利次数:${++numberOfVictory}`);
-    }
-    p = settle(json.settleReward);
-    if (p) {
-      json.settleReward.imgConfig.region =
-        json.settleReward.imgConfig.region || enlargeRegion(p, w, h);
-    }
-    p = settle(json.settleFail);
-    if (p) {
-      json.settleFail.imgConfig.region =
-        json.settleFail.imgConfig.region || enlargeRegion(p, w, h);
-      console.log(`失败次数:${++numberOfFailures}`);
-    }
+    //结算逻辑
+    if (结算('win', {})) console.log(`胜利次数:${++numberOfVictory}`);
+    if (结算('fail', {})) console.log(`失败次数:${++numberOfFailures}`);
+    结算('reward', {});
+    //休息
     sleep(500);
   }
-  while (true) {
-    p = findImg(json.tupo_close, true);
-    if (p) {
-      json.tupo_close.region = json.tupo_close.region || enlargeRegion(p, w, h);
-      sleep(3000);
-      if (!findImg(json.tupo_close)) {
-        files.write(filePath, JSON.stringify(json), "utf-8");
-        return numberOfVictory;
-      }
-    }
-    sleep(500);
-  }
+  //退出突破逻辑  
+  退出突破界面();
 };

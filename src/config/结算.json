@@ -1,0 +1,54 @@
+{
+    "settleView": {
+        "imgConfig": {
+            "template": "./images/结算.bmp"
+        },
+        "settlementArray": [
+            [
+                10,
+                100,
+                120,
+                550
+            ],
+            [
+                1150,
+                50,
+                1280,
+                720
+            ]
+        ]
+    },
+    "settleReward": {
+        "imgConfig": {
+            "template": "./images/结算二.bmp"
+        },
+        "settlementArray": [
+            [
+                10,
+                100,
+                120,
+                550
+            ],
+            [
+                1150,
+                150,
+                1280,
+                720
+            ]
+        ]
+    },
+    "settleWin": {
+        "imgConfig": {
+            "template": "./images/结算一.bmp",
+            "isColor": true,
+            "threshold": 0.9
+        }
+    },
+    "settleFail": {
+        "imgConfig": {
+            "template": "./images/失败结算.bmp",
+            "isColor": true,
+            "threshold": 0.8
+        }
+    }
+}

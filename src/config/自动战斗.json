@@ -1,0 +1,12 @@
+{
+    "自动战斗": {
+        "template": "./images/手动.png",
+        "region": [
+            0,
+            550,
+            150,
+            720
+        ],
+        "threshold": 0.8
+    }
+}
