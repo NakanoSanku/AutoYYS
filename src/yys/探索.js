@@ -9,13 +9,12 @@ let config = JSON.parse(files.read(filePath));
 //退出探索函数
 function exitExplore() {
   while (true) {
-    if (!findImg(config.探索_退出确认, true)) {
-      if (findImg(config.探索_退出, true)) sleep(1500);
-    }else{
-      return;
+    if (findImg(config.探索_退出, true)) {
+      sleep(1500);
+      if (findImg(config.探索_退出确认, true)) sleep(1000);
     }
+    sleep(800);
   }
-
 }
 
 module.exports = function (times, delayTime) {
@@ -83,7 +82,7 @@ module.exports = function (times, delayTime) {
       }
     }
     //检测结算
-    if (结算('view',{})) console.info(`${++i}次结算完成`);
+    if (结算('view', {})) console.info(`${++i}次结算完成`);
     //休息
     sleep(delayTime);
   }
