@@ -12,6 +12,7 @@ function exitExplore() {
     if (findImg(config.探索_退出, true)) {
       sleep(1500);
       if (findImg(config.探索_退出确认, true)) sleep(1000);
+      return;
     }
     sleep(800);
   }
